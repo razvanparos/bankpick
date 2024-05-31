@@ -1,0 +1,13 @@
+.login-div{
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 24px;
+}
+.new-user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 4px;
+}

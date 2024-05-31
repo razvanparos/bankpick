@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react'
+import { useState } from 'react';
 import './App.css';
+import SplashPage from './Pages/SplashPage/SplashPage.tsx';
+import Login from './Pages/Login/Login.tsx';
+import Register from './Pages/Register/Register.tsx';
 
 function App() {
+  const [currentPage, setCurrentPage]=useState('splash')
+
+  const changePage=(page)=>{
+    setCurrentPage(page)
+  }
+  useEffect(()=>{
+    setTimeout(() => {
+      setCurrentPage('login')
+    }, 2000);
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {currentPage==='splash'?<SplashPage/>:''}
+      {currentPage==='login'?<Login changePage={changePage}/>:''}
+      {currentPage==='register'?<Register changePage={changePage}/>:''}
+    
     </div>
   );
 }

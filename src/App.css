@@ -60,14 +60,17 @@ body{
     padding: 16px 0px;
     border-radius: 16px;
     cursor: pointer;
+    font-size: 16px;
 }
 .sign-in-input{
     background-color: transparent;
     border: 0px;
-    border-bottom: 1px solid var(--gray);
     width: 100%;
     padding: 4px;
     font-size: 16px;
+}
+.border-bottom{
+    border-bottom: 1px solid var(--gray);
 }
 .sign-in-input:focus{
     outline: none;

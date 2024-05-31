@@ -6,14 +6,14 @@ function Login(props: any) {
     const [signInEmail, setSignInEmail]=useState<string>('')
     const [signInPassword, setSignInPassword]=useState<string>('')
   return (
-    <Slide direction='down' duration={1000}>
+    <Slide direction='down' duration={500}>
         <div className="login-div padding">
             <h2 className='big-text'>Sign In</h2>
-            <div>
+            <div className='border-bottom'>
                 <p className='small-text'>Email Address</p>
                 <input className='sign-in-input' type="email" value={signInEmail} onChange={(e)=>{setSignInEmail(e.target.value)}}/>
             </div>
-            <div>
+            <div className='border-bottom'>
                 <p className='small-text'>Password</p>
                 <input className='sign-in-input' type="password" value={signInPassword} onChange={(e)=>{setSignInPassword(e.target.value)}}/>
             </div>

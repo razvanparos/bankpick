@@ -15,8 +15,9 @@ input::-webkit-inner-spin-button {
 }
 :root{
     --dark-blue: rgba(22, 22, 34, 1);
-    --primary-blue: rgba(0, 102, 255, 1);
+    --primary-blue: rgb(0, 102, 255);
     --gray: rgba(112, 112, 112, 1);
+    --dark-gray: #1E1E2D;
 }
 body{
     background-color: var(--dark-blue);
@@ -33,7 +34,7 @@ body{
 .App{
     width: 100%;
     max-width: 440px;
-    overflow: hidden;
+    height: fit-content;
 }
 .padding{
     padding: 0px 20px;
@@ -75,3 +76,23 @@ body{
 .sign-in-input:focus{
     outline: none;
 }
+
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-blue);
+  }

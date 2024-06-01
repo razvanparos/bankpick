@@ -11,3 +11,18 @@
     justify-content: center;
     column-gap: 4px;
 }
+.remember-me{
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+}
+.remember-box{
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-blue);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

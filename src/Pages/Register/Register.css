@@ -8,3 +8,11 @@
 .back-div img{
     cursor: pointer;
 }
+.back-div{
+    display: flex;
+    align-items: center;
+}
+.back-div p{
+    width: 100%;
+    text-align: center;
+}

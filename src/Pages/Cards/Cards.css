@@ -1,0 +1,20 @@
+.cards-top{
+    text-align: center;
+}
+.cards-div{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    padding-bottom: 90px;
+}
+.my-cards-list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+.cards-div button{
+    width: 100%;
+    font-size: 20px;
+    
+}

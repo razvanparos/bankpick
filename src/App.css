@@ -13,6 +13,10 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+html {
+    overflow: hidden;
+    width: 100%;
+  }
 :root{
     --dark-blue: rgba(22, 22, 34, 1);
     --primary-blue: rgb(0, 102, 255);
@@ -24,6 +28,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    overflow-y: scroll;
 }
 #root{
     width: 100%;

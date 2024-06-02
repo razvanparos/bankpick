@@ -15,6 +15,7 @@ import { LuWalletCards } from "react-icons/lu";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { MdOutlineSettings } from "react-icons/md";
 import Cards from '../Cards/Cards.tsx';
+import AddCard from '../AddCard/AddCard.tsx';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
@@ -29,11 +30,15 @@ function Home(props: any) {
         localStorage.setItem('RememberUser','')
         props.changePage('login')
     }
+    const changeTab = (tab: string) =>{
+        setHomeTab(tab)
+    }
     
     return (
     <Slide duration={500}>
         <div className=" home-screen">
             {homeTab==='home'?
+            <Slide duration={300}>
                 <div className="home-div padding">
                     <div className='home-top'>
                         <div className='profile-pic' onClick={signOut}>
@@ -102,16 +107,17 @@ function Home(props: any) {
                         <p style={{color:'var(--primary-blue)'}}>See All</p>
                     </div>
                 </div>:<p style={{textAlign:'center'}}>No transactions</p>}
-            </div>:''}
+            </div></Slide>:''}
 
-            {homeTab==='cards'?<Cards/>:''}
+            {homeTab==='cards'?<Cards myCardsArray={myCardsArray} changeTab={changeTab}/>:''}
+            {homeTab==='addCard'?<AddCard changeTab={changeTab}/>:''}
 
             <nav className='nav padding'>
                 <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${homeTab==='home'?'active-tab':''}`}>
                     <TbHome2 className='icon'/>
                     <p>Home</p>
                 </div>
-                <div onClick={()=>{setHomeTab('cards')}} className={`nav-button ${homeTab==='cards'?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('cards')}} className={`nav-button ${['cards','addCard'].includes(homeTab)?'active-tab':''}`}>
                     <LuWalletCards className='icon'/>
                     <p>Cards</p>
                 </div>

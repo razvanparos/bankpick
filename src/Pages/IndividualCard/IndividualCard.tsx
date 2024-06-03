@@ -31,6 +31,9 @@ function IndividualCard(props: any) {
         if(Number(editCardCvv)>999){
             setEditCardCvv(String(999))
         }
+        if(Number(editCardCvv)<0){
+            setEditCardCvv(String(0))
+        }
     },[editCardCvv])
     useEffect(()=>{
         if(Number(editCardYear)>99){
@@ -47,6 +50,9 @@ function IndividualCard(props: any) {
     },[editCardNumber])
 
     const handleUpdateCard=async()=>{
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = Math.floor(currentDate.getFullYear()%100);
         if(!/^[A-Za-z]+$/.test(editCardName)){
             setEditCardError('Invalid Cardholder Name')
             return;
@@ -59,7 +65,11 @@ function IndividualCard(props: any) {
             setEditCardError('Invalid Expiry Year')
             return;
         }else{setEditCardError('')}
-        if(editCardCvv.toString().length<3){
+        if(Number(editCardYear)<=currentYear && Number(editCardMonth)<currentMonth){
+            setEditCardError('Expired Card')
+            return;
+        }else{setEditCardError('')}
+        if(editCardCvv.toString().length<3 || editCardCvv.toString().length>3){
             setEditCardError('Invalid Card CVV')
             return;
         }else{setEditCardError('')}

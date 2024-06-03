@@ -32,6 +32,9 @@ function AddCard(props: any) {
         if(Number(newCardCvv)>999){
             setNewCardCvv(String(999))
         }
+        if(Number(newCardCvv)<0){
+            setNewCardCvv(String(0))
+        }
     },[newCardCvv])
     useEffect(()=>{
         if(Number(newCardYear)>99){
@@ -48,6 +51,9 @@ function AddCard(props: any) {
     },[newCardNumber])
 
     const handleAddCard=async()=>{
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = Math.floor(currentDate.getFullYear()%100);
         if(!/^[A-Za-z]+$/.test(newCardName)){
             setNewCardError('Invalid Cardholder Name')
             return;
@@ -56,11 +62,15 @@ function AddCard(props: any) {
             setNewCardError('Invalid Card Number')
             return;
         }else{setNewCardError('')}
-        if(Number(newCardYear)<24){
+        if(Number(newCardYear)<currentYear){
             setNewCardError('Invalid Expiry Year')
             return;
         }else{setNewCardError('')}
-        if(newCardCvv.toString().length<3){
+        if(Number(newCardYear)<=currentYear && Number(newCardMonth)<currentMonth){
+            setNewCardError('Expired Card')
+            return;
+        }else{setNewCardError('')}
+        if(newCardCvv.toString().length<3 || newCardCvv.toString().length>3 ){
             setNewCardError('Invalid Card CVV')
             return;
         }else{setNewCardError('')}

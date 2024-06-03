@@ -15,4 +15,6 @@
 .back-div p{
     width: 100%;
     text-align: center;
+    transform: translateX(-20px);
+    font-size: 1.5em;
 }

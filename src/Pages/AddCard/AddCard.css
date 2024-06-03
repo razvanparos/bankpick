@@ -9,7 +9,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+}
+.add-card-bottom div{
+   width: 35%;
 }
 .input-field{
     display: flex;
@@ -19,6 +21,8 @@
 .input-field input{
     background-color: transparent;
     border: 0px;
+    font-size: 20px;
+    padding: 2px 8px;
 }
 .input-field input:focus{
     outline: none;
@@ -26,4 +30,20 @@
 .add-card-btn{
     width: 100%;
     font-size: 20px;
+}
+.card-name{
+    min-height: 30px;
+    max-height: 30px;
+    overflow-x: hidden;
+}
+.date-input-div{
+    display: flex;
+    align-items: center;
+}
+.date-input-div input{
+    min-width: 40px;
+    max-width: 40px;
+}
+.date-input-div input::placeholder{
+   font-size: 12px;
 }

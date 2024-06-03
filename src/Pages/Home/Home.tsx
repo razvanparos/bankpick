@@ -110,7 +110,7 @@ function Home(props: any) {
             </div></Slide>:''}
 
             {homeTab==='cards'?<Cards myCardsArray={myCardsArray} changeTab={changeTab}/>:''}
-            {homeTab==='addCard'?<AddCard changeTab={changeTab}/>:''}
+            {homeTab==='addCard'?<AddCard changeTab={changeTab} uid={props.userData.id}/>:''}
 
             <nav className='nav padding'>
                 <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${homeTab==='home'?'active-tab':''}`}>

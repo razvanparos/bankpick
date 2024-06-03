@@ -1,18 +1,93 @@
 import './AddCard.css';
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Slide } from "react-awesome-reveal";
 import back from '../../Assets/back-img.png';
 import cardImg1 from '../../Assets/Group 1000000882.png'
 import cardImg2 from '../../Assets/Group 1000000964.png'
 import cardImg3 from '../../Assets/Group 3.png'
+import {db} from '../../firebase-config';
+import {getDoc, setDoc,collection, query, where, doc, deleteDoc, updateDoc, arrayUnion} from 'firebase/firestore';
+import { UserContext } from '../../App';
+
 
 
 function AddCard(props: any) {
     const [newCardNumber, setNewCardNumber]=useState('')
     const [newCardName, setNewCardName]=useState('')
-    const [newCardMonth, setNewCardMonth]=useState(0)
-    const [newCardYear, setNewCardYear]=useState(0)
-    const [newCardCvv, setNewCardCvv]=useState(0)
+    const [newCardMonth, setNewCardMonth]=useState('')
+    const [newCardYear, setNewCardYear]=useState('')
+    const [newCardCvv, setNewCardCvv]=useState('')
+    const [newCardError, setNewCardError]=useState('')
+    const {getUserData} = useContext(UserContext);
+
+    useEffect(()=>{
+        if(Number(newCardMonth)>12){
+            setNewCardMonth(String(12))
+        }
+        if(Number(newCardMonth)<1){
+            setNewCardMonth(String(''))
+        }
+    },[newCardMonth])
+    useEffect(()=>{
+        if(Number(newCardCvv)>999){
+            setNewCardCvv(String(999))
+        }
+    },[newCardCvv])
+    useEffect(()=>{
+        if(Number(newCardYear)>99){
+            setNewCardYear(String(99))
+        }
+        if(Number(newCardYear)<24 && Number(newCardYear)>10){
+            setNewCardYear('')
+        }
+    },[newCardYear])
+    useEffect(()=>{
+        if(Number(newCardNumber)>9999999999999999){
+            setNewCardNumber(String(''))
+        }
+    },[newCardNumber])
+
+    const handleAddCard=async()=>{
+        if(!/^[A-Za-z]+$/.test(newCardName)){
+            setNewCardError('Invalid Cardholder Name')
+            return;
+        }else{setNewCardError('')}
+        if(newCardNumber.toString().length<16){
+            setNewCardError('Invalid Card Number')
+            return;
+        }else{setNewCardError('')}
+        if(Number(newCardYear)<24){
+            setNewCardError('Invalid Expiry Year')
+            return;
+        }else{setNewCardError('')}
+        if(newCardCvv.toString().length<3){
+            setNewCardError('Invalid Card CVV')
+            return;
+        }else{setNewCardError('')}
+        if(newCardName&&newCardNumber&&newCardMonth&&newCardYear){
+            try {
+                var newId = "id" + Math.random().toString(16).slice(2)
+                const usersRef = doc(db, 'UsersDetails', props.uid);
+                await updateDoc(usersRef,{
+                    myCards: arrayUnion({
+                        id: newId,
+                        cardName: newCardName,
+                        cardNumber: newCardNumber,
+                        expireMonth: newCardMonth,
+                        expireYear: newCardYear,
+                        cvv: newCardCvv,
+                        transactions: []
+                    })
+                });
+                await getUserData();
+                setNewCardError('');
+                props.changeTab('cards')
+            } catch (error) {
+                console.error("Error uploading image:", error);
+            }
+        }else{setNewCardError('Please complete all fields')}
+    }
+
   return (
     <div className="add-card-div padding">
        <Slide duration={300}>
@@ -31,11 +106,11 @@ function AddCard(props: any) {
                         <p>{Math.floor(Math.floor(Number(newCardNumber)%100000000)/10000)}</p>
                         <p>{Number(newCardNumber)%10000}</p>
                     </div>
-                    <h3>{newCardName}</h3>
+                    <h3 className='card-name'>{newCardName}</h3>
                     <div className='card-bottom'>
                         <div>
                             <p className='small-text'>Expiry Date</p>
-                            <p>{`${newCardMonth<10?`0${newCardMonth}`:`${newCardMonth}`}/${newCardYear}`}</p>
+                            <p>{`${newCardMonth}/${newCardYear}`}</p>
                         </div>
                         <div>
                             <p className='small-text'>CVV</p>
@@ -55,14 +130,19 @@ function AddCard(props: any) {
                 <div className='add-card-bottom'>
                     <div className='input-field'>
                         <p className='small-text'>Expiry Date</p>
-                        <input type="text" />
+                        <div className='date-input-div'>
+                            <input type="number" placeholder={'mm'} value={newCardMonth} onChange={(e)=>{setNewCardMonth(e.target.value)}}/>/
+                            <input type="number" placeholder={'yy'} value={newCardYear} onChange={(e)=>{setNewCardYear(e.target.value)}}/>
+                        </div>
+                        
                     </div>
                     <div className='input-field'>
                         <p className='small-text'>CVV</p>
-                        <input type="number" />
+                        <input type="number" value={newCardCvv} onChange={(e)=>{setNewCardCvv(e.target.value)}}/>
                     </div>
                 </div>
-                <button className='add-card-btn primary-btn '>Submit</button>
+                <p style={{color:'red', textAlign:'center'}}>{newCardError}</p>
+                <button className='add-card-btn primary-btn' onClick={handleAddCard}>Submit</button>
        </Slide>
     </div>
   );

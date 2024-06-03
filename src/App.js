@@ -11,7 +11,7 @@ import {db} from './firebase-config.js';
 
 /**
  * @typedef {Object} UserContextType
- * @property {Function} getUserData - A function to fetch user data
+ * @property {Function} getUserData 
  */
 
 

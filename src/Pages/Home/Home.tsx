@@ -50,7 +50,7 @@ function Home(props: any) {
                     </div>
                 </div>
                 {myCardsArray?.length>0 ?(
-                <div>
+                <div className='home-cards-list'>
                     {myCardsArray?.map((card) => (
                         <div key={card.id} className='card'>
                             <div className='card-top'>
@@ -79,7 +79,7 @@ function Home(props: any) {
                     ))}
                 </div>):(<div className='add-new-card'>
                             <p>Add new card</p>
-                            <img src={Add} alt="" />
+                            <img src={Add} alt="" onClick={()=>{changeTab('cards')}}/>
                         </div>)}
             {myCardsArray?.length>0 ?         
             <div className='card-actions'>

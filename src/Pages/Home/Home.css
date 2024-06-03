@@ -134,6 +134,11 @@
     filter: brightness(0) saturate(100%) invert(23%) sepia(95%) saturate(3590%) hue-rotate(212deg) brightness(104%) contrast(105%);
     color: var(--primary-blue);
 }
+.home-cards-list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
 @media (max-width: 375px) {
     .card-number{
         font-size: 24px;

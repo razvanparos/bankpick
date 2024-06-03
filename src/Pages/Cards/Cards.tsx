@@ -7,7 +7,9 @@ import cardImg3 from '../../Assets/Group 3.png'
 
 
 function Cards(props: any) {
-  console.log(props.myCardsArray)
+  const openCard = (card: any)=>{
+    props.openIndividualCard(card);
+  }
   return (
     <div className="cards-div padding">
         <Slide duration={300}>
@@ -15,9 +17,9 @@ function Cards(props: any) {
                 All cards
           </h2>
           <div className='my-cards-list'>
-            {props.myCardsArray.map((card: any)=>{
+            {props?.myCardsArray.map((card: any)=>{
                 return(
-                  <div key={card.id} className='card'>
+                  <div key={card.id} className='card' onClick={()=>{openCard(card)}}>
                     <div className='card-top'>
                         <img src={cardImg1} alt="" />
                         <img src={cardImg2} alt="" />

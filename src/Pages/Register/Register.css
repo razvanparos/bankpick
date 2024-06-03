@@ -7,6 +7,8 @@
 }
 .back-div img{
     cursor: pointer;
+    border-radius: 50%;
+    z-index: 1;
 }
 .back-div{
     display: flex;

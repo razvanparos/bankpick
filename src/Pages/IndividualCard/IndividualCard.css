@@ -1,0 +1,7 @@
+.individual-card-div{
+    margin-top: 40px;
+    padding-bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}

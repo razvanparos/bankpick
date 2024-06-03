@@ -16,10 +16,12 @@ import { AiOutlinePieChart } from "react-icons/ai";
 import { MdOutlineSettings } from "react-icons/md";
 import Cards from '../Cards/Cards.tsx';
 import AddCard from '../AddCard/AddCard.tsx';
+import IndividualCard from '../IndividualCard/IndividualCard.tsx';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
     const [homeTab, setHomeTab]=useState('home');
+    const [individualCardData, setIndividualCardData]=useState({});
 
 
     useEffect(()=>{
@@ -32,6 +34,10 @@ function Home(props: any) {
     }
     const changeTab = (tab: string) =>{
         setHomeTab(tab)
+    }
+    const openIndividualCard = (card: any) =>{
+        setHomeTab('individualCard');
+        setIndividualCardData(card)
     }
     
     return (
@@ -109,15 +115,16 @@ function Home(props: any) {
                 </div>:<p style={{textAlign:'center'}}>No transactions</p>}
             </div></Slide>:''}
 
-            {homeTab==='cards'?<Cards myCardsArray={myCardsArray} changeTab={changeTab}/>:''}
+            {homeTab==='cards'?<Cards myCardsArray={myCardsArray} changeTab={changeTab} openIndividualCard={openIndividualCard}/>:''}
             {homeTab==='addCard'?<AddCard changeTab={changeTab} uid={props.userData.id}/>:''}
+            {homeTab==='individualCard'?<IndividualCard changeTab={changeTab} individualCardData={individualCardData} uid={props.userData.id} myCardsArray={myCardsArray}/>:''}
 
             <nav className='nav padding'>
                 <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${homeTab==='home'?'active-tab':''}`}>
                     <TbHome2 className='icon'/>
                     <p>Home</p>
                 </div>
-                <div onClick={()=>{setHomeTab('cards')}} className={`nav-button ${['cards','addCard'].includes(homeTab)?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('cards')}} className={`nav-button ${['cards','addCard','individualCard'].includes(homeTab)?'active-tab':''}`}>
                     <LuWalletCards className='icon'/>
                     <p>Cards</p>
                 </div>

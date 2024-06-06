@@ -17,11 +17,13 @@ import { MdOutlineSettings } from "react-icons/md";
 import Cards from '../Cards/Cards.tsx';
 import AddCard from '../AddCard/AddCard.tsx';
 import IndividualCard from '../IndividualCard/IndividualCard.tsx';
+import ReactCardFlip from 'react-card-flip';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
     const [homeTab, setHomeTab]=useState('home');
     const [individualCardData, setIndividualCardData]=useState({});
+    const [isFlippedArray, setIsFlippedArray] = useState<{ [key: number]: boolean }>({});
 
 
     useEffect(()=>{
@@ -38,6 +40,12 @@ function Home(props: any) {
     const openIndividualCard = (card: any) =>{
         setHomeTab('individualCard');
         setIndividualCardData(card)
+    }
+    const handleFlip = (id: number) => {
+        setIsFlippedArray((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id]
+        }));
     }
     
     return (
@@ -58,30 +66,57 @@ function Home(props: any) {
                 {myCardsArray?.length>0 ?(
                 <div className='home-cards-list'>
                     {myCardsArray?.map((card) => (
-                        <div key={card.id} className='card'>
-                            <div className='card-top'>
-                                <img src={cardImg1} alt="" />
-                                <img src={cardImg2} alt="" />
-                            </div>
-                            <div className='card-number'>
-                                <p>{Math.floor(card.cardNumber/1000000000000)}</p>
-                                <p>{Math.floor(Math.floor((Math.floor(card.cardNumber%1000000000000)))/100000000)}</p>
-                                <p>{Math.floor(Math.floor(card.cardNumber%100000000)/10000)}</p>
-                                <p>{card.cardNumber%10000}</p>
-                            </div>
-                            <h3>{card.cardName}</h3>
-                            <div className='card-bottom'>
-                                <div>
-                                    <p className='small-text'>Expiry Date</p>
-                                    <p>{`${card.expireMonth<10?`0${card.expireMonth}`:`${card.expireMonth}`}/${card.expireYear}`}</p>
+                        <ReactCardFlip isFlipped={!!isFlippedArray[card.id]} flipDirection="horizontal" key={card.id}>
+                            <div className='card' onClick={()=> handleFlip(card.id)}>
+                                <div className='card-top'>
+                                    <img src={cardImg1} alt="" />
+                                    <img src={cardImg2} alt="" />
                                 </div>
-                                <div>
-                                    <p className='small-text'>CVV</p>
-                                    <p>{card.cvv}</p>
+                                <div className='card-number'>
+                                    <p>****</p>
+                                    <p>****</p>
+                                    <p>****</p>
+                                    <p>{card.cardNumber%10000}</p>
                                 </div>
-                                <img src={cardImg3} alt="" />
+                                <h3>{card.cardName}</h3>
+                                <div className='card-bottom'>
+                                    <div>
+                                        <p className='small-text'>Expiry Date</p>
+                                        <p>{`${card.expireMonth
+                                            <10?`0${card.expireMonth}`:`${card.expireMonth}`}/${card.expireYear}`} </p>
+                                                </div> <div>
+                                                <p className='small-text'>CVV</p>
+                                                <p>***</p>
+                                    </div>
+                                    <img src={cardImg3} alt="" />
+                                </div>
                             </div>
-                        </div>
+                            <div className='card-back' onClick={()=> handleFlip(card.id)}>
+                                <div className='card-number'>
+                                    <p>{Math.floor(card.cardNumber/1000000000000)}</p>
+                                    <p>{Math.floor(Math.floor((Math.floor(card.cardNumber%1000000000000)))/100000000)}
+                                    </p>
+                                    <p>{Math.floor(Math.floor(card.cardNumber%100000000)/10000)}</p>
+                                    <p>{card.cardNumber%10000}</p>
+                                </div>
+                                <div style={{display:'flex', alignItems:'center',justifyContent:'space-between'}}>
+                                   <h3>{card.cardName}</h3>
+                                   <p>${Intl.NumberFormat().format(card.cardBalance)}</p>
+                                </div>
+                                
+                                <div className='card-bottom'>
+                                    <div>
+                                        <p className='small-text'>Expiry Date</p>
+                                        <p>{`${card.expireMonth
+                                            <10?`0${card.expireMonth}`:`${card.expireMonth}`}/${card.expireYear}`} </p>
+                                                </div> <div>
+                                                <p className='small-text'>CVV</p>
+                                                <p>{card.cvv}</p>
+                                    </div>
+                                    <img src={cardImg3} alt="" />
+                                </div>
+                            </div>
+                        </ReactCardFlip>
                     ))}
                 </div>):(<div className='add-new-card'>
                             <p>Add new card</p>

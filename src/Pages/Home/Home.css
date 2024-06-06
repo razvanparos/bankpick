@@ -49,6 +49,21 @@
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+}
+.card-back{
+    background-color: rgba(0, 102, 255, 0.384);
+    width: 100%;
+    height: 220px;
+    min-height: 220px;
+    border-radius: 25px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    overflow: hidden;
 }
 .card-top{
     display: flex;

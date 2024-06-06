@@ -86,7 +86,8 @@ function AddCard(props: any) {
                         expireMonth: newCardMonth,
                         expireYear: newCardYear,
                         cvv: newCardCvv,
-                        transactions: []
+                        transactions: [],
+                        cardBalance: 0
                     })
                 });
                 await getUserData();

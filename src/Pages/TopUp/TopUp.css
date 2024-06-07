@@ -1,0 +1,57 @@
+.topup-div{
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+.topup-card{
+    display: flex;
+    align-items: center ;
+    justify-content: space-between;
+    background-color: var(--dark-gray);
+    border-radius: 5px;
+    cursor: pointer;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.topup-cards-list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+.topup-card-number{
+    display: flex;
+    column-gap: 4px;
+}
+.selected-card{
+    box-shadow: 0px 0px 0px 3px var(--primary-blue);
+}
+.topup-amount-div{
+    background-color: var(--dark-gray);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    border: 0px;
+    overflow: hidden;
+}
+.topup-amount-div input{
+    font-size: 24px;
+    font-weight: 600;
+    width: 100%;
+    color: transparent;
+    position: absolute;
+}
+.topup-add{
+    width: 100%;
+}
+.topup-amt{
+    width: 100%;
+    padding-left: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary-blue);
+}

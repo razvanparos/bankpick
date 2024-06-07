@@ -88,7 +88,8 @@ function IndividualCard(props: any) {
                     expireMonth: editCardMonth,
                     expireYear: editCardYear,
                     cvv: editCardCvv,
-                    transactions: []
+                    transactions: props.individualCardData.transactions,
+                    cardBalance: props.individualCardData.cardBalance
                 };
                 await updateDoc(usersRef, { myCards: updatedCardsArray });
                 await getUserData();

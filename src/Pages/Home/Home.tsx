@@ -18,6 +18,7 @@ import Cards from '../Cards/Cards.tsx';
 import AddCard from '../AddCard/AddCard.tsx';
 import IndividualCard from '../IndividualCard/IndividualCard.tsx';
 import ReactCardFlip from 'react-card-flip';
+import TopUp from '../TopUp/TopUp.tsx';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
@@ -136,7 +137,7 @@ function Home(props: any) {
                     <div className='action-circle'><PiBank /></div>
                     <p>Loan</p>
                 </div>
-                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}} onClick={()=>{changeTab('topUp')}}>
                     <div className='action-circle'><BsCurrencyDollar/></div>
                     <p>TopUp</p>
                 </div>
@@ -153,9 +154,10 @@ function Home(props: any) {
             {homeTab==='cards'?<Cards myCardsArray={myCardsArray} changeTab={changeTab} openIndividualCard={openIndividualCard}/>:''}
             {homeTab==='addCard'?<AddCard changeTab={changeTab} uid={props.userData.id}/>:''}
             {homeTab==='individualCard'?<IndividualCard changeTab={changeTab} individualCardData={individualCardData} uid={props.userData.id} myCardsArray={myCardsArray}/>:''}
+            {homeTab==='topUp'?<TopUp changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id}/>:''}
 
             <nav className='nav padding'>
-                <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${homeTab==='home'?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp'].includes(homeTab)?'active-tab':''}`}>
                     <TbHome2 className='icon'/>
                     <p>Home</p>
                 </div>

@@ -22,14 +22,28 @@ import TopUp from '../TopUp/TopUp.tsx';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
+    const [myTransactionsArray, setMyTransactionsArray]=useState<any[]>([]);
     const [homeTab, setHomeTab]=useState('home');
     const [individualCardData, setIndividualCardData]=useState({});
     const [isFlippedArray, setIsFlippedArray] = useState<{ [key: number]: boolean }>({});
+    
+    const sortTransactionsByDateTime = (transactions: any[]) => {
+        return transactions?.sort((a, b) => {
+            const [dayA, monthA, yearA] = a.transactionDate.split('.').map(Number);
+            const [dayB, monthB, yearB] = b.transactionDate.split('.').map(Number);
+            const dateA = new Date(yearA, monthA - 1, dayA, ...a.transactionTime.split(':').map(Number));
+            const dateB = new Date(yearB, monthB - 1, dayB, ...b.transactionTime.split(':').map(Number));
+            return dateB.getTime() - dateA.getTime();
+        });
+    };
 
 
-    useEffect(()=>{
-        setMyCardsArray(props.userData.myCards)
-    },[props.userData])
+    useEffect(() => {
+        setMyCardsArray(props.userData.myCards);
+        const sortedTransactions = sortTransactionsByDateTime(props.userData.transactions);
+        setMyTransactionsArray(sortedTransactions);
+        console.log(sortedTransactions);
+    }, [props.userData]);
 
     const signOut = () =>{
         localStorage.setItem('RememberUser','')
@@ -66,6 +80,7 @@ function Home(props: any) {
                 </div>
                 {myCardsArray?.length>0 ?(
                 <div className='home-cards-list'>
+                    <p className='small-text'>Tap the card to reveal information</p>
                     {myCardsArray?.map((card) => (
                         <ReactCardFlip isFlipped={!!isFlippedArray[card.id]} flipDirection="horizontal" key={card.id}>
                             <div className='card' onClick={()=> handleFlip(card.id)}>
@@ -142,11 +157,26 @@ function Home(props: any) {
                     <p>TopUp</p>
                 </div>
             </div>: ''}
-            {props.userData?.myCards?.transactions?.length>0?
+            {myTransactionsArray?.length>0?
                 <div className='transactions-div'>
                     <div className='transactions-top'>
                         <p>Transactions</p>
                         <p style={{color:'var(--primary-blue)'}}>See All</p>
+                    </div>
+                    <div className='transactions-list'>
+                        {myTransactionsArray?.map((t)=>(
+                            <div key={t.id} className='transaction-card padding'>
+                                <div className='transaction-details'>
+                                    <div className='transaction-icon'><BsCurrencyDollar/></div>
+                                    <div >
+                                        <p>{t.from}</p>
+                                        <p className='small-text'>{t.transactionDate}, {t.transactionTime}</p>
+                                    </div>
+                                </div>
+                                
+                                {t.type==='income'?<p>+ ${Intl.NumberFormat().format(t.amount)}</p>:<p>- ${Intl.NumberFormat().format(t.amount)}</p>}
+                            </div>
+                        ))}
                     </div>
                 </div>:<p style={{textAlign:'center'}}>No transactions</p>}
             </div></Slide>:''}
@@ -154,7 +184,7 @@ function Home(props: any) {
             {homeTab==='cards'?<Cards myCardsArray={myCardsArray} changeTab={changeTab} openIndividualCard={openIndividualCard}/>:''}
             {homeTab==='addCard'?<AddCard changeTab={changeTab} uid={props.userData.id}/>:''}
             {homeTab==='individualCard'?<IndividualCard changeTab={changeTab} individualCardData={individualCardData} uid={props.userData.id} myCardsArray={myCardsArray}/>:''}
-            {homeTab==='topUp'?<TopUp changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id}/>:''}
+            {homeTab==='topUp'?<TopUp changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id} myTransactionsArray={myTransactionsArray}/>:''}
 
             <nav className='nav padding'>
                 <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp'].includes(homeTab)?'active-tab':''}`}>

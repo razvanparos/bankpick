@@ -28,7 +28,8 @@ function Register(props: any) {
               email: signUpEmail,
               phone: signUpPhone,
               fullName:signUpName,
-              myCards:[]
+              myCards:[],
+              transactions: []
             });
             setLoading(false);
             props.changePage('login')

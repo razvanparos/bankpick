@@ -101,6 +101,18 @@ function IndividualCard(props: any) {
         }else{setEditCardError('Please complete all fields')}
     }
 
+    const handleDeleteCard=async()=>{
+        const updatedCardsArray = [...props.myCardsArray];
+        const usersRef = doc(db, 'UsersDetails', props.uid);
+        const cardIndex = props.myCardsArray.findIndex(card => card.id === props.individualCardData.id);
+        if (cardIndex !== -1) {
+            updatedCardsArray.splice(cardIndex, 1);
+            await updateDoc(usersRef, {myCards: updatedCardsArray });
+        } 
+        await getUserData();
+        props.changeTab('cards')
+    }
+
   return (
     <div className="individual-card-div padding">
         <Slide duration={300}>
@@ -156,6 +168,7 @@ function IndividualCard(props: any) {
                 </div>
                 <p style={{color:'red', textAlign:'center'}}>{editCardError}</p>
                 <button className='add-card-btn primary-btn' onClick={handleUpdateCard}>Update</button>
+                <button className='delete-card-btn' onClick={handleDeleteCard}>Delete Card</button>
         </Slide>
         
     </div>

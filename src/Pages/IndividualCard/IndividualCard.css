@@ -5,3 +5,11 @@
     flex-direction: column;
     row-gap: 24px;
 }
+.delete-card-btn{
+    background-color: transparent;
+    width: 100%;
+    color: red;
+    border: 0px;
+    font-size: 14px;
+    cursor: pointer;
+}

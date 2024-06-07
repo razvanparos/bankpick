@@ -86,7 +86,6 @@ function AddCard(props: any) {
                         expireMonth: newCardMonth,
                         expireYear: newCardYear,
                         cvv: newCardCvv,
-                        transactions: [],
                         cardBalance: 0
                     })
                 });

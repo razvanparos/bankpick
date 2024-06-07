@@ -32,7 +32,26 @@ function TopUp(props: any) {
             if (cardIndex === -1) {
                 throw new Error("Card not found");
             }
+            let orderDate = new Date();
+            let orderDateFormat = `${orderDate.getDate()}.${orderDate.getMonth()+1}.${orderDate.getFullYear()}`
+            let orderTime = new Date();
+            let orderTimeFormat: any;
+            if(orderTime.getMinutes()<10){
+                orderTimeFormat = orderTime.getHours().toLocaleString()+':0'+orderTime.getMinutes()
+            }else{
+                orderTimeFormat = orderTime.getHours().toLocaleString()+':'+orderTime.getMinutes()
+            }
+            var newId = "id" + Math.random().toString(16).slice(2);
             const updatedCardsArray = [...props.myCardsArray];
+            const updatedTransactions = [...props.myTransactionsArray,{
+                id: newId,
+                type:'income',
+                amount: Number(topUpAmount),
+                cardUsed: selectedCard,
+                transactionDate: orderDateFormat,
+                transactionTime: orderTimeFormat,
+                from: 'TopUp'
+            }];
             updatedCardsArray[cardIndex] = {
                 ...updatedCardsArray[cardIndex],
                 cardName: props.myCardsArray[cardIndex].cardName,
@@ -40,13 +59,10 @@ function TopUp(props: any) {
                 expireMonth: props.myCardsArray[cardIndex].expireMonth,
                 expireYear: props.myCardsArray[cardIndex].expireYear,
                 cvv: props.myCardsArray[cardIndex].cvv,
-                transactions: [...props.myCardsArray[cardIndex].transactions, {
-                    type: 'received',
-                    amount: Number(topUpAmount)  
-                }],
                 cardBalance: Number(props.myCardsArray[cardIndex].cardBalance) + Number(topUpAmount)
             };
             await updateDoc(usersRef, { myCards: updatedCardsArray });
+            await updateDoc(usersRef, { transactions: updatedTransactions });
             await getUserData();
             setTopUpError('')
             props.changeTab('home')

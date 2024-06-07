@@ -155,6 +155,38 @@
     flex-direction: column;
     row-gap: 24px;
 }
+.transactions-list{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    background-color: var(--dark-gray);
+    border-radius: 10px;
+}
+.transaction-card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.transaction-icon{
+    background-color: var(--primary-blue);
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+}
+.transaction-details{
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+}
+
 @media (max-width: 375px) {
     .card-number{
         font-size: 24px;

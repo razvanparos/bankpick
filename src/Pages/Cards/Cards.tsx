@@ -17,6 +17,7 @@ function Cards(props: any) {
                 All cards
           </h2>
           <div className='my-cards-list'>
+            <p className='small-text'>Tap to update card</p>
             {props?.myCardsArray.map((card: any)=>{
                 return(
                   <div key={card.id} className='card' onClick={()=>{openCard(card)}}>

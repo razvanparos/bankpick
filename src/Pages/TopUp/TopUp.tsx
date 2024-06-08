@@ -5,6 +5,7 @@ import back from '../../Assets/back-img.png';
 import {getDoc, setDoc,collection, query, where, doc, deleteDoc, updateDoc, arrayUnion} from 'firebase/firestore';
 import {db} from '../../firebase-config';
 import { UserContext } from '../../App';
+import Loader from '../../Components/Loader/Loader';
 
 
 function TopUp(props: any) {
@@ -12,18 +13,22 @@ function TopUp(props: any) {
     const [selectedCard, setSelectedCard] = useState('')
     const [topUpAmount, setTopUpAmount] = useState('')
     const [topUpError, setTopUpError] = useState('')
+    const [loading, setLoading] = useState(false)
     const {getUserData} = useContext(UserContext);
 
     const focusInput = ()=>{
         document.getElementById('amt')?.focus()
     }
     const handleAddMoney = async()=>{
+        setLoading(true);
         if(!selectedCard){
             setTopUpError('No Card Selected')
+            setLoading(false);
             return
         }else setTopUpError('')
         if(Number(topUpAmount)<10){
             setTopUpError('Minimum $10')
+            setLoading(false);
             return
         }else setTopUpError('')
         try {
@@ -66,9 +71,11 @@ function TopUp(props: any) {
             await updateDoc(usersRef, { transactions: updatedTransactions});
             await getUserData();
             setTopUpError('')
+            setLoading(false)
             props.changeTab('home')
         } catch (error) {
             console.error("Error uploading image:", error);
+            setLoading(false)
         }
     }
 
@@ -112,7 +119,7 @@ function TopUp(props: any) {
                 
             </div>
             <p style={{color:'red', textAlign:'center'}}>{topUpError}</p>
-            <button className='primary-btn topup-add' onClick={handleAddMoney}>Add Money</button>
+            <button className='primary-btn topup-add' onClick={handleAddMoney}>{loading?<Loader/>:'Add Money'}</button>
         </Slide>
         
     </div>

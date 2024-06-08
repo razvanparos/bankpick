@@ -5,6 +5,7 @@ import back from '../../Assets/back-img.png';
 import {getDocs,getDoc, setDoc,collection, query, where, doc, deleteDoc, updateDoc, arrayUnion} from 'firebase/firestore';
 import {db} from '../../firebase-config';
 import { UserContext } from '../../App';
+import Loader from '../../Components/Loader/Loader';
 
 function Send(props: any) {
 
@@ -13,6 +14,7 @@ function Send(props: any) {
     const [sendId, setSendEmail] = useState('')
     const [sendCard, setSendCard] = useState('')
     const [sendError, setSendError] = useState('')
+    const [loading, setLoading] = useState(false)
     const {getUserData} = useContext(UserContext);
 
     const focusInput = ()=>{
@@ -27,26 +29,32 @@ function Send(props: any) {
         }
     },[sendAmount])
     const sendMoney = async()=>{
+        setLoading(true)
         if(!selectedCard){
             setSendError('No Card Selected')
+            setLoading(false)
             return
         }else setSendError('')
         if(!sendId){
             setSendError('Invalid User Id')
+            setLoading(false)
             return
         }else setSendError('')
         if(Number(sendAmount)<1){
             setSendError('Minimum $1')
+            setLoading(false)
             return
         }else setSendError('')
 
         const cardIndex = props.myCardsArray.findIndex(card => card.id === selectedCard);
         if(Number(props.myCardsArray[cardIndex].cardBalance)<Number(sendAmount)){
             setSendError('Insufficient Funds')
+            setLoading(false)
             return
         }else setSendError('')
         if(sendId===props.uid){
             setSendError('Cannot transfer to same account')
+            setLoading(false)
             return
         }else setSendError('')  
         const q = query(collection(db, 'UsersDetails'), where("id", "==", sendId));
@@ -57,11 +65,11 @@ function Send(props: any) {
             }))
             if(filteredData.length<1){
                 setSendError('User not found')
+                setLoading(false)
                 return
             }else{
                 setSendError('')
             }
-            console.log(filteredData)
             const sendRef = doc(db, 'UsersDetails', sendId);
             const myRef = doc(db, 'UsersDetails', props.uid);
             const sendDoc = await getDoc(sendRef);
@@ -72,6 +80,7 @@ function Send(props: any) {
             const sendCardIndex = cardsArray.findIndex(card => card.cardNumber === sendCard);
             if(sendCardIndex<0){
                 setSendError('Card not found')
+                setLoading(false)
                 return
             }else setSendError('')
             const updatedCardsArray = [...cardsArray];
@@ -130,6 +139,7 @@ function Send(props: any) {
             await updateDoc(myRef, { transactions: updatedMyTransactions});
             await getUserData();
             setSendError('')
+            setLoading(false)
             props.changeTab('home')
     }
     
@@ -170,7 +180,7 @@ function Send(props: any) {
                 
             </div>
             <p style={{color:'red', textAlign:'center'}}>{sendError}</p>
-            <button className='primary-btn topup-add' onClick={sendMoney}>Send Money</button>
+            <button className='primary-btn topup-add' onClick={sendMoney}>{loading?<Loader/>:'Send Money'}</button>
         </Slide>
         
     </div>

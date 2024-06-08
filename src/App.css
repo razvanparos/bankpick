@@ -68,6 +68,9 @@ body{
     border-radius: 16px;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .sign-in-input{
     background-color: transparent;

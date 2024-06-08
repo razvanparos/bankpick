@@ -1,6 +1,6 @@
 import './Home.css';
 import React, { useEffect, useState } from 'react'
-import { Slide, Fade } from "react-awesome-reveal";
+import { Slide } from "react-awesome-reveal";
 import { FaUser } from "react-icons/fa";
 import cardImg1 from '../../Assets/Group 1000000882.png'
 import cardImg2 from '../../Assets/Group 1000000964.png'
@@ -20,10 +20,18 @@ import IndividualCard from '../IndividualCard/IndividualCard.tsx';
 import ReactCardFlip from 'react-card-flip';
 import TopUp from '../TopUp/TopUp.tsx';
 import Send from '../Send/Send.tsx';
+import Transactions from '../Transactions/Transactions.tsx';
+import Receive from '../Receive/Receive.tsx';
+import Loan from '../Loan/Loan.tsx';
+import Profile from '../Profile/Profile.tsx';
+import Settings from '../Settings/Settings.tsx';
+import Stats from '../Stats/Stats.tsx';
+import Loader from '../../Components/Loader/Loader.jsx';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
     const [myTransactionsArray, setMyTransactionsArray]=useState<any[]>([]);
+    const [myLastTransactionsArray, setMyLastTransactionsArray]=useState<any[]>([]);
     const [homeTab, setHomeTab]=useState('home');
     const [individualCardData, setIndividualCardData]=useState({});
     const [isFlippedArray, setIsFlippedArray] = useState<{ [key: number]: boolean }>({});
@@ -41,17 +49,14 @@ function Home(props: any) {
 
     useEffect(() => {
         setMyCardsArray(props.userData.myCards);
-        const sortedTransactions = sortTransactionsByDateTime(props.userData.transactions);
+        const sortedTransactions = sortTransactionsByDateTime(props.userData?.transactions);
         setMyTransactionsArray(sortedTransactions);
+        setMyLastTransactionsArray(sortedTransactions?.slice(0,5));
     }, [props.userData]);
     useEffect(() => {
         props.getUserData();
     }, [homeTab]);
-
-    const signOut = () =>{
-        localStorage.setItem('RememberUser','')
-        props.changePage('login')
-    }
+    
     const changeTab = (tab: string) =>{
         setHomeTab(tab)
     }
@@ -73,14 +78,14 @@ function Home(props: any) {
             <Slide duration={300}>
                 <div className="home-div padding">
                     <div className='home-top'>
-                        <div className='profile-pic' onClick={signOut}>
+                        <div className='profile-pic' onClick={()=>{changeTab('profile')}}>
                             <FaUser className='user-icon'/>
                         </div>
-                    <div className='home-top-name'>
-                        <p className='small-text'>Welcome back,</p>
-                        <h2>{props.userData.fullName}</h2>
+                        <div className='home-top-name'>
+                            <p className='small-text'>Welcome back,</p>
+                            <h2>{props.userData.fullName}</h2>
+                        </div>
                     </div>
-                </div>
                 {myCardsArray?.length>0 ?(
                 <div className='home-cards-list'>
                     <p className='small-text'>Tap the card to reveal information</p>
@@ -147,11 +152,11 @@ function Home(props: any) {
                     <div className='action-circle'><LiaArrowUpSolid /></div>
                     <p>Send</p>
                 </div>
-                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}} onClick={()=>{changeTab('receive')}}>
                     <div className='action-circle'><LiaArrowDownSolid /></div>
                     <p>Receive</p>
                 </div>
-                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}} onClick={()=>{changeTab('loan')}}>
                     <div className='action-circle'><PiBank /></div>
                     <p>Loan</p>
                 </div>
@@ -164,10 +169,10 @@ function Home(props: any) {
                 <div className='transactions-div'>
                     <div className='transactions-top'>
                         <p>Transactions</p>
-                        <p style={{color:'var(--primary-blue)'}}>See All</p>
+                        <p style={{color:'var(--primary-blue)'}} onClick={()=>{changeTab('transactions')}}>See All</p>
                     </div>
                     <div className='transactions-list'>
-                        {myTransactionsArray?.map((t)=>(
+                        {myLastTransactionsArray?.map((t)=>(
                             <div key={t.id} className='transaction-card padding'>
                                 <div className='transaction-details'>
                                     <div className='transaction-icon'><BsCurrencyDollar/></div>
@@ -189,9 +194,15 @@ function Home(props: any) {
             {homeTab==='individualCard'?<IndividualCard changeTab={changeTab} individualCardData={individualCardData} uid={props.userData.id} myCardsArray={myCardsArray}/>:''}
             {homeTab==='topUp'?<TopUp changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id} myTransactionsArray={myTransactionsArray}/>:''}
             {homeTab==='send'?<Send changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id} myTransactionsArray={myTransactionsArray} myName={props.userData.fullName}/>:''}
+            {homeTab==='transactions'?<Transactions myTransactionsArray={myTransactionsArray} changeTab={changeTab}/>:''}
+            {homeTab==='receive'?<Receive changeTab={changeTab}/>:''}
+            {homeTab==='loan'?<Loan changeTab={changeTab}/>:''}
+            {homeTab==='profile'?<Profile changeTab={changeTab} myName={props.userData.fullName} uid={props.userData.id}/>:''}
+            {homeTab==='settings'?<Settings changeTab={changeTab}/>:''}
+            {homeTab==='stats'?<Stats changeTab={changeTab}/>:''}
 
             <nav className='nav padding'>
-                <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp','send'].includes(homeTab)?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp','send','transactions','loan','receive'].includes(homeTab)?'active-tab':''}`}>
                     <TbHome2 className='icon'/>
                     <p>Home</p>
                 </div>
@@ -199,11 +210,11 @@ function Home(props: any) {
                     <LuWalletCards className='icon'/>
                     <p>Cards</p>
                 </div>
-                <div onClick={()=>{setHomeTab('statistics')}} className={`nav-button ${homeTab==='statistics'?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('stats')}} className={`nav-button ${homeTab==='stats'?'active-tab':''}`}>
                     <AiOutlinePieChart className='icon'/>
                     <p>Statistics</p>
                 </div>
-                <div onClick={()=>{setHomeTab('settings')}} className={`nav-button ${homeTab==='settings'?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('settings')}} className={`nav-button ${['settings','profile'].includes(homeTab)?'active-tab':''}`}>
                     <MdOutlineSettings className='icon'/>
                     <p>Settings</p>
                 </div>

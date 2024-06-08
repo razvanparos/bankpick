@@ -19,6 +19,7 @@ import AddCard from '../AddCard/AddCard.tsx';
 import IndividualCard from '../IndividualCard/IndividualCard.tsx';
 import ReactCardFlip from 'react-card-flip';
 import TopUp from '../TopUp/TopUp.tsx';
+import Send from '../Send/Send.tsx';
 
 function Home(props: any) {
     const [myCardsArray, setMyCardsArray]=useState<any[]>([]);
@@ -42,7 +43,6 @@ function Home(props: any) {
         setMyCardsArray(props.userData.myCards);
         const sortedTransactions = sortTransactionsByDateTime(props.userData.transactions);
         setMyTransactionsArray(sortedTransactions);
-        console.log(sortedTransactions);
     }, [props.userData]);
 
     const signOut = () =>{
@@ -140,7 +140,7 @@ function Home(props: any) {
                         </div>)}
             {myCardsArray?.length>0 ?         
             <div className='card-actions'>
-                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <div style={{display:'flex', flexDirection:'column', alignItems:'center'}} onClick={()=>{changeTab('send')}}>
                     <div className='action-circle'><LiaArrowUpSolid /></div>
                     <p>Send</p>
                 </div>
@@ -185,9 +185,10 @@ function Home(props: any) {
             {homeTab==='addCard'?<AddCard changeTab={changeTab} uid={props.userData.id}/>:''}
             {homeTab==='individualCard'?<IndividualCard changeTab={changeTab} individualCardData={individualCardData} uid={props.userData.id} myCardsArray={myCardsArray}/>:''}
             {homeTab==='topUp'?<TopUp changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id} myTransactionsArray={myTransactionsArray}/>:''}
+            {homeTab==='send'?<Send changeTab={changeTab} myCardsArray={myCardsArray} uid={props.userData.id} myTransactionsArray={myTransactionsArray} myName={props.userData.fullName}/>:''}
 
             <nav className='nav padding'>
-                <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp'].includes(homeTab)?'active-tab':''}`}>
+                <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp','send'].includes(homeTab)?'active-tab':''}`}>
                     <TbHome2 className='icon'/>
                     <p>Home</p>
                 </div>

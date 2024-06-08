@@ -59,10 +59,11 @@ function TopUp(props: any) {
                 expireMonth: props.myCardsArray[cardIndex].expireMonth,
                 expireYear: props.myCardsArray[cardIndex].expireYear,
                 cvv: props.myCardsArray[cardIndex].cvv,
+                id: props.myCardsArray[cardIndex].id,
                 cardBalance: Number(props.myCardsArray[cardIndex].cardBalance) + Number(topUpAmount)
             };
-            await updateDoc(usersRef, { myCards: updatedCardsArray });
-            await updateDoc(usersRef, { transactions: updatedTransactions });
+            await updateDoc(usersRef, { myCards: updatedCardsArray});
+            await updateDoc(usersRef, { transactions: updatedTransactions});
             await getUserData();
             setTopUpError('')
             props.changeTab('home')

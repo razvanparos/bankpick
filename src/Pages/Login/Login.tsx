@@ -41,7 +41,6 @@ function Login(props: any) {
 
   return (
     <Slide direction='down' duration={500}>
-        {loading?<Loader/>:
         <div className="login-div padding">
             <h2 className='big-text'>Sign In</h2>
             <div className='border-bottom'>
@@ -57,9 +56,9 @@ function Login(props: any) {
               <p>Remember me</p>
             </div>
             <p style={{textAlign:'center',color:'red'}}>{errorMsg}</p>
-            <button className='primary-btn' onClick={login}>Sign In</button>
+            <button className='primary-btn' onClick={login}>{loading?<Loader/>:'Sign In'}</button>
             <div className='flex small-text new-user'>I'm a new user.<p className='small-text-button' onClick={()=>{props.changePage('register')}}>Sign Up</p></div>
-        </div>}
+        </div>
     </Slide>
 );
 }

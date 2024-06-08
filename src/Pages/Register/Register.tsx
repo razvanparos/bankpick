@@ -43,7 +43,6 @@ function Register(props: any) {
     }
   return (
     <Slide direction='right' duration={500}>
-        {loading?<Loader/>:
         <div className="register-div padding">
             <div className='back-div'>
                 <img src={back} alt="" onClick={()=>{props.changePage('login')}}/>
@@ -66,8 +65,8 @@ function Register(props: any) {
                 <input className='sign-in-input' type="password" value={signUpPassword} onChange={(e)=>{setSignUpPassword(e.target.value)}}/>
             </div>
             <p style={{textAlign:'center', color:'red'}}>{errorMsg}</p>
-            <button className='primary-btn' onClick={register}>Sign Up</button> 
-        </div>}
+            <button className='primary-btn' onClick={register}>{loading?<Loader/>:'Sign Up'}</button> 
+        </div>
     </Slide>
         
     

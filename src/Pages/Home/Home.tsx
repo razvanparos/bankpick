@@ -197,7 +197,7 @@ function Home(props: any) {
             {homeTab==='transactions'?<Transactions myTransactionsArray={myTransactionsArray} changeTab={changeTab}/>:''}
             {homeTab==='receive'?<Receive changeTab={changeTab}/>:''}
             {homeTab==='loan'?<Loan changeTab={changeTab}/>:''}
-            {homeTab==='profile'?<Profile changeTab={changeTab} myName={props.userData.fullName} uid={props.userData.id}/>:''}
+            {homeTab==='profile'?<Profile changeTab={changeTab} changePage={props.changePage} myName={props.userData.fullName} uid={props.userData.id}/>:''}
             {homeTab==='settings'?<Settings changeTab={changeTab}/>:''}
             {homeTab==='stats'?<Stats changeTab={changeTab}/>:''}
 

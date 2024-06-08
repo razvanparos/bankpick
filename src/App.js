@@ -61,7 +61,7 @@ function App() {
         {currentPage==='splash'?<SplashPage/>:''}
         {currentPage==='login'?<Login changePage={changePage} loginUser={loginUser}/>:''}
         {currentPage==='register'?<Register changePage={changePage}/>:''}
-        {currentPage==='home'?<Home changePage={changePage} currentUser={currentUser} userData={userData}/>:''}
+        {currentPage==='home'?<Home changePage={changePage} currentUser={currentUser} userData={userData} getUserData={getUserData}/>:''}
       </div>
     </UserContext.Provider>
     

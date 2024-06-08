@@ -18,6 +18,14 @@ function Send(props: any) {
     const focusInput = ()=>{
         document.getElementById('send-amt')?.focus()
     }
+    useEffect(()=>{
+        if(Number(sendAmount)>999999999){
+            setSendAmount(String(999999999))
+        }
+        if(Number(sendAmount)<0){
+            setSendAmount(String(0))
+        }
+    },[sendAmount])
     const sendMoney = async()=>{
         if(!selectedCard){
             setSendError('No Card Selected')

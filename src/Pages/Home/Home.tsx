@@ -44,6 +44,9 @@ function Home(props: any) {
         const sortedTransactions = sortTransactionsByDateTime(props.userData.transactions);
         setMyTransactionsArray(sortedTransactions);
     }, [props.userData]);
+    useEffect(() => {
+        props.getUserData();
+    }, [homeTab]);
 
     const signOut = () =>{
         localStorage.setItem('RememberUser','')

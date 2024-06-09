@@ -19,7 +19,7 @@ function Profile(props: any) {
     <div className="topup-div padding">
         <Slide duration={300}>
             <div className='back-div'>
-                <img src={back} alt="" onClick={()=>{props.changeTab('home')}}/>
+                <img src={back} alt="" onClick={()=>{props.changeTab('settings')}}/>
                 <p>My Profile</p>
             </div>
             <div className='home-top'>

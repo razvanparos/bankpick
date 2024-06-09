@@ -8,11 +8,16 @@ import { BsCurrencyDollar } from "react-icons/bs";
 
 
 function Transactions(props: any) {
+  
+    useEffect(()=>{
+        const element = document.getElementById("box");
+        element?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    },[])
     
   return (
     <div className="topup-div padding">
         <Slide duration={300}>
-            <div className='back-div'>
+            <div className='back-div' id='box'>
                 <img src={back} alt="" onClick={()=>{props.changeTab('home')}}/>
                 <p>Transactions History</p>
             </div>

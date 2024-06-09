@@ -6,6 +6,7 @@ import {getDocs,getDoc, setDoc,collection, query, where, doc, deleteDoc, updateD
 import {db} from '../../firebase-config';
 import { UserContext } from '../../App';
 import { BsCurrencyDollar } from "react-icons/bs";
+import arrow from '../../Assets/Arrow.png'
 
 
 function Settings(props: any) {
@@ -16,6 +17,17 @@ function Settings(props: any) {
             <div className='back-div'>
                 <img src={back} alt="" onClick={()=>{props.changeTab('home')}}/>
                 <p>Settings</p>
+            </div>
+            <p className='small-text'>General</p>
+            <div className='settings-list'>
+                <div className='option' onClick={()=>{props.changeTab('profile')}}>
+                  <p>My Profile</p>
+                  <img src={arrow} alt="" />
+                </div>
+                <div className='option'>
+                  <p>Contact Us</p>
+                  <img src={arrow} alt="" />
+                </div>
             </div>
         </Slide>
     </div>

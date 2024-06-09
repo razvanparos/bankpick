@@ -1,0 +1,8 @@
+.option{
+    border-bottom: 1px solid var(--dark-gray);
+    cursor: pointer;
+    padding: 12px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

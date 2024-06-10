@@ -1,0 +1,23 @@
+.balance-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.balance-div p:nth-child(1){
+    color: var(--gray);
+}
+.balance-div p{
+    font-size: 20px;
+}
+.chart-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.area{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

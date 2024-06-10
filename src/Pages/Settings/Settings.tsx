@@ -14,10 +14,7 @@ function Settings(props: any) {
   return (
     <div className="topup-div padding">
         <Slide duration={300}>
-            <div className='back-div'>
-                <img src={back} alt="" onClick={()=>{props.changeTab('home')}}/>
-                <p>Settings</p>
-            </div>
+            <h2 className='cards-top'>Settings</h2>
             <p className='small-text'>General</p>
             <div className='settings-list'>
                 <div className='option' onClick={()=>{props.changeTab('profile')}}>

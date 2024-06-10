@@ -199,7 +199,7 @@ function Home(props: any) {
             {homeTab==='loan'?<Loan changeTab={changeTab}/>:''}
             {homeTab==='profile'?<Profile changeTab={changeTab} changePage={props.changePage} myName={props.userData.fullName} uid={props.userData.id}/>:''}
             {homeTab==='settings'?<Settings changeTab={changeTab}/>:''}
-            {homeTab==='stats'?<Stats changeTab={changeTab} myCardsArray={myCardsArray}/>:''}
+            {homeTab==='stats'?<Stats changeTab={changeTab} myCardsArray={myCardsArray} myTransactionsArray={myTransactionsArray} myLastTransactionsArray={myLastTransactionsArray}/>:''}
 
             <nav className='nav padding'>
                 <div onClick={()=>{setHomeTab('home')}} className={`nav-button ${['home','topUp','send','transactions','loan','receive'].includes(homeTab)?'active-tab':''}`}>

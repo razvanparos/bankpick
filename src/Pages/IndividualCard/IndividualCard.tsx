@@ -53,7 +53,7 @@ function IndividualCard(props: any) {
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth();
         let currentYear = Math.floor(currentDate.getFullYear()%100);
-        if(!/^[A-Za-z]+$/.test(editCardName)){
+        if(!/^[A-Za-z\s]+$/.test(editCardName)){
             setEditCardError('Invalid Cardholder Name')
             return;
         }else{setEditCardError('')}

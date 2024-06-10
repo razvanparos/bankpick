@@ -54,7 +54,7 @@ function AddCard(props: any) {
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth();
         let currentYear = Math.floor(currentDate.getFullYear()%100);
-        if(!/^[A-Za-z]+$/.test(newCardName)){
+        if(!/^[A-Za-z\s]+$/.test(newCardName)){
             setNewCardError('Invalid Cardholder Name')
             return;
         }else{setNewCardError('')}

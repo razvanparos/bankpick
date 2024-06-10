@@ -12,7 +12,7 @@ function Profile(props: any) {
 
     const signOut = () =>{
         localStorage.setItem('RememberUser','')
-        props.changePage('')
+        props.changePage('login')
     }
     
   return (

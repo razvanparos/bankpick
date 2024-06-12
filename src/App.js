@@ -28,61 +28,63 @@ function App() {
   const changePage=(page)=>{
     setCurrentPage(page)
   }
-  const getUserData=async()=>{
+  const getUserData = async () => {
     let currentDate = new Date();
     let nextDay = new Date();
-    nextDay.setDate(currentDate.getDate()+1)
-    const q = query(collection(db,'UsersDetails'), where("id", "==", auth.currentUser?.uid));
+    nextDay.setDate(currentDate.getDate() + 1);
+
+    const q = query(collection(db, 'UsersDetails'), where("id", "==", auth.currentUser?.uid));
     const querySnapshot = await getDocs(q);
-    const filteredData = querySnapshot.docs.map((doc)=>({
-       ...doc.data(),
-       id: doc.id,
-   })) 
-   setUserData(filteredData[0])
+    const filteredData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+    }));
 
-   const totalBalance = filteredData[0].myCards.reduce((acc, card) => acc + card.cardBalance, 0);
-   setStatsBalance(totalBalance);
+    setUserData(filteredData[0]);
 
-   const dateStringWithYear = `${filteredData[0].lastUpdated[0]} ${filteredData[0].lastUpdated[1]} ${filteredData[0].lastUpdated[2]}`;
-   const formattedDate = new Date(dateStringWithYear);
-   let timeDifference=currentDate.getTime()-formattedDate.getTime();
-   let daysDifference = parseInt(timeDifference / (1000 * 60 * 60 * 24));
-   let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec',]
-   const usersRef = doc(db, 'UsersDetails', auth.currentUser?.uid);
-   if(daysDifference===0){
-    if(filteredData[0].statsData[6].pv!=totalBalance){
-      let dataFromDb = filteredData[0].statsData
-      dataFromDb.pop();
-      dataFromDb.push({
-        date: `${currentDate.getDate()} ${months[currentDate.getMonth()]}`,
-        pv: totalBalance
-    });
-    setChartData(dataFromDb)
-    await updateDoc(usersRef, { statsData: dataFromDb});
-    }else{
-      setChartData(filteredData[0].statsData)
-    }
-   }else{
-      let oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-      let formattedDateTime = formattedDate.getTime();
-      let dataFromDb = filteredData[0].statsData
-      for(let i=0;i<daysDifference;i++){
-        let nextDayTime = formattedDateTime + oneDayInMilliseconds+i*oneDayInMilliseconds;
-        let nextDay = new Date(nextDayTime);
-        dataFromDb.shift();
-        dataFromDb.push({
-            date: `${nextDay.getDate()} ${months[nextDay.getMonth()]}`,
-            pv: totalBalance
+    const totalBalance = filteredData[0].myCards.reduce((acc, card) => acc + card.cardBalance, 0);
+    setStatsBalance(totalBalance);
+
+    const dateStringWithYear = `${filteredData[0].lastUpdated[2]}-${filteredData[0].lastUpdated[0]}-${filteredData[0].lastUpdated[1]}`;
+    const formattedDate = new Date(dateStringWithYear);
+    const timeDifference = currentDate.getTime() - formattedDate.getTime();
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const usersRef = doc(db, 'UsersDetails', auth.currentUser?.uid);
+
+    if (daysDifference === 0) {
+        if (filteredData[0].statsData[6].pv !== totalBalance) {
+            let dataFromDb = [...filteredData[0].statsData];
+            dataFromDb.pop();
+            dataFromDb.push({
+                date: `${currentDate.getDate()} ${months[currentDate.getMonth()]}`,
+                pv: totalBalance
+            });
+            setChartData(dataFromDb);
+            await updateDoc(usersRef, { statsData: dataFromDb });
+        } else {
+            setChartData(filteredData[0].statsData);
+        }
+    } else {
+        let dataFromDb = [...filteredData[0].statsData];
+        for (let i = 0; i < daysDifference; i++) {
+            let newDate = new Date(formattedDate.getTime() + (i + 1) * 24 * 60 * 60 * 1000);
+            dataFromDb.shift();
+            dataFromDb.push({
+                date: `${newDate.getDate()} ${months[newDate.getMonth()]}`,
+                pv: 0
+            });
+        }
+        dataFromDb[dataFromDb.length - 1].pv = totalBalance;
+        setChartData(dataFromDb);
+
+        await updateDoc(usersRef, { 
+            statsData: dataFromDb, 
+            lastUpdated: [currentDate.getMonth() + 1, currentDate.getDate(), currentDate.getFullYear()] 
         });
-      }
-      console.log(dataFromDb)
-      setChartData(dataFromDb)
-      
-      await updateDoc(usersRef, { statsData: dataFromDb});
-      await updateDoc(usersRef, { lastUpdated: [currentDate.getMonth()+1, currentDate.getDate(), currentDate.getFullYear()]});
-      getUserData();
-   }
-  }
+    }
+};
 
   const loginUser=(uid,remember,data)=>{
     if(remember===true){

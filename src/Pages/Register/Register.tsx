@@ -17,30 +17,52 @@ function Register(props: any) {
     const [loading, setLoading]=useState<boolean>(false)
     const [errorMsg, setErrorMsg]=useState<string>('')
 
-    const register=async(e)=>{
-        e.preventDefault();
-        if(signUpName && signUpPhone && signUpEmail && signUpPassword){
-          try{
-            setLoading(true);
-            await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword) 
-            await setDoc(doc(db, "UsersDetails", `${auth.currentUser?.uid}`), {
-              id: auth.currentUser?.uid,
-              email: signUpEmail,
-              phone: signUpPhone,
-              fullName:signUpName,
-              myCards:[],
-              transactions: []
-            });
-            setLoading(false);
-            props.changePage('login')
-          } catch(err){
-            setLoading(false);
-            console.log(err)
-            setErrorMsg(err.message)
+    type StatData = {
+      date: string;
+      pv: number;
+  };
+    const register = async (e) => {
+      e.preventDefault();
+      if (signUpName && signUpPhone && signUpEmail && signUpPassword) {
+          try {
+              setLoading(true);
+              let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+              let updateDate = new Date();
+  
+              const statsData: StatData[] = [];
+              for (let i = 6; i >= 0; i--) {
+                  let date = new Date();
+                  date.setDate(updateDate.getDate() - i);
+                  let updateDateDay = date.getDate();
+                  let updateDateMonth = date.getMonth();
+                  let updateDateYear = date.getFullYear();
+                  statsData.push({
+                      date: `${updateDateDay} ${months[updateDateMonth]}`,
+                      pv: 0
+                  });
+              }
+  
+              await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+              await setDoc(doc(db, "UsersDetails", `${auth.currentUser?.uid}`), {
+                  id: auth.currentUser?.uid,
+                  email: signUpEmail,
+                  phone: signUpPhone,
+                  fullName: signUpName,
+                  myCards: [],
+                  transactions: [],
+                  lastUpdated: [updateDate.getMonth() + 1, updateDate.getDate(), updateDate.getFullYear()],
+                  statsData: statsData
+              });
+  
+              setLoading(false);
+              props.changePage('login');
+          } catch (err) {
+              setLoading(false);
+              console.log(err);
+              setErrorMsg(err.message);
           }
-    }
-        
-    }
+      }
+  };
   return (
     <Slide direction='right' duration={500}>
         <div className="register-div padding">

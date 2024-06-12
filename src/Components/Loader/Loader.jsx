@@ -2,7 +2,7 @@ import './Loader.css'
 
 function Loader(){
     return(
-        <div class="loader">
+        <div className="loader">
             <div className="bar1"></div>
             <div className="bar2"></div>
             <div className="bar3"></div>

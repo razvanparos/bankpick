@@ -1,59 +1,29 @@
 import './Stats.css';
 import React ,{useState, useEffect} from 'react'
 import { Slide } from "react-awesome-reveal";
-import { UserContext } from '../../App';
 import { BsCurrencyDollar } from "react-icons/bs";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
-const data = [
-  {
-    name: 'Page A',
-    uv: 2000,
-  },
-  {
-    name: 'Page B',
-    uv: 2200,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-  }
-];
-
-
-
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 function Stats(props: any) {
-
-  const [statsBalance, setStatsBalance] = useState(0);
-  useEffect(() => {
-    const totalBalance = props.myCardsArray.reduce((acc:any, card:any) => acc + card.cardBalance, 0);
-    setStatsBalance(totalBalance); 
-  }, [props.myCardsArray]);
-
-  
   return (
     <div className="topup-div padding">
         <Slide duration={300}>
           <h2 className='cards-top'>Statistics</h2>
           <div className='balance-div'>
             <p>Current Balance</p>
-            <p>${Intl.NumberFormat().format(statsBalance)}</p>
+            <p>${Intl.NumberFormat().format(props.statsBalance)}</p>
           </div>
           <div className='chart-div'>
             <AreaChart className='area'
-              width={500}
-              height={324}
-              data={data}
+              width={510}
+              height={320}
+              data={props.chartData}
               margin={{
-                top: 0,
-                right: 10,
-                left: 10,
+                top: 10,
+                right:82,
+                left: 84,
                 bottom: 12}}>
-              <Area type="monotone" dataKey="uv" strokeWidth={7} stroke="rgb(0, 102, 255)" fill="rgba(0, 102, 255, 0.072)" />
+              <XAxis dataKey={`date`} fontSize={12} stroke='white'/>
+              <Area type="monotone" dataKey="pv" strokeWidth={7} stroke="rgb(0, 102, 255)" fill="rgba(0, 102, 255, 0.072)" />
             </AreaChart>
             <p className='small-text'>Last 7 days balance trend</p>
           </div>
@@ -83,5 +53,4 @@ function Stats(props: any) {
     </div>
   );
 }
-
 export default Stats;

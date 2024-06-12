@@ -23,6 +23,7 @@ function App() {
   const [userData, setUserData]=useState('')
   const [statsBalance, setStatsBalance] = useState(0);
   const [chartData, setChartData] = useState([]);
+  
 
   const changePage=(page)=>{
     setCurrentPage(page)
@@ -75,10 +76,11 @@ function App() {
         });
       }
       console.log(dataFromDb)
-      setChartData(dataFromDb)
+      // setChartData(dataFromDb)
       
       await updateDoc(usersRef, { statsData: dataFromDb});
       await updateDoc(usersRef, { lastUpdated: [currentDate.getMonth()+1, currentDate.getDate(), currentDate.getFullYear()]});
+      getUserData();
    }
   }
 

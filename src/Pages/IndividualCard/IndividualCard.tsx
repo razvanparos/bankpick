@@ -88,15 +88,15 @@ function IndividualCard(props: any) {
                     expireMonth: editCardMonth,
                     expireYear: editCardYear,
                     cvv: editCardCvv,
-                    transactions: props.individualCardData.transactions,
-                    cardBalance: props.individualCardData.cardBalance
+                    cardBalance: props.individualCardData.cardBalance,
+                    id:  props.individualCardData.id
                 };
                 await updateDoc(usersRef, { myCards: updatedCardsArray });
                 await getUserData();
                 setEditCardError('');
                 props.changeTab('cards')
             } catch (error) {
-                console.error("Error uploading image:", error);
+                console.error("Error:", error);
             }
         }else{setEditCardError('Please complete all fields')}
     }

@@ -28,6 +28,11 @@ function Register(props: any) {
               setLoading(true);
               let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
               let updateDate = new Date();
+              if(signUpPhone.length!=10){
+                setErrorMsg('Invalid phone')
+                setLoading(false);
+                return
+              }
   
               const statsData: StatData[] = [];
               for (let i = 6; i >= 0; i--) {
@@ -61,6 +66,8 @@ function Register(props: any) {
               console.log(err);
               setErrorMsg(err.message);
           }
+      }else{
+        setErrorMsg("All field are required");
       }
   };
   return (

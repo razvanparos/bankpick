@@ -11,6 +11,20 @@
   font-family: "Poppins", sans-serif;
 }
 
+.card-bg-img{
+  background-image: url('./assets/worldmap@2x\ 1.png');
+}
+.microchip{
+  background-image: url('./assets/Group\ 1000000882.png');
+}
+.contactless{
+  background-image: url('./assets/Group\ 1000000964.png');
+}
+.mastercard{
+  background-image: url('./assets/Group\ 3.png');
+  background-repeat: no-repeat;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -114,3 +128,18 @@ body{
     animation-delay: -0.1s;
   }
   
+  
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0066FF;
+  border-radius: 10px;
+}

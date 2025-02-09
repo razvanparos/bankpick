@@ -1,7 +1,8 @@
 import notificationReducer from "./notificationReducers.ts";
+import userReducers from "./userReducers.ts";
 
 
-const allReducers = [notificationReducer];
+const allReducers = [notificationReducer, userReducers];
 
 const combineReducers = (state, action) => {
   let result = false;

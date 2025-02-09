@@ -4,6 +4,7 @@ import ButtonComponent from "../components/ButtonComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import NotificationActions from "../context/actions/notificationActions.ts";
 import { loginUser } from "../services/authService.ts";
+import Loader from "../components/Loader.tsx";
 
 
 function Login() {
@@ -25,14 +26,14 @@ function Login() {
 
   const handleLogin = async(e) => {
     e.preventDefault();
-    changeLoginState('login',true)
+    changeLoginState('loading',true)
     try{
       await loginUser(loginState)
       navigate('/')
     }catch(err){
       NotificationActions.showNotification(err,'danger')
     }
-    changeLoginState('login',false)
+    changeLoginState('loading',false)
   };
 
   return (
@@ -48,11 +49,11 @@ function Login() {
           <FormRow type="checkbox" onChangeFunction={()=>{changeLoginState('rememberMe',!loginState.rememberMe)}}/>
           <p>Remember me</p>
         </div>
-        <ButtonComponent text={"Sign In"} type="primary" />
+        <ButtonComponent text={loginState.loading?<Loader/>:"Sign In"} type="primary" />
       </form>
        <p className="flex items-center justify-center text-sm w-full text-center text-gray">
           I'm a new user. &nbsp;
-          <ButtonComponent text={'Sign up'} type={'text'} onClickFunction={()=>{navigate('/register')}}/>
+          <ButtonComponent text={"Sign Up"} type={'text'} onClickFunction={()=>{navigate('/register')}}/>
         </p>
     </main>
   );

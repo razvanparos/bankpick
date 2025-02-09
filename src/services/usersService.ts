@@ -21,7 +21,7 @@ export const addNewUser = async (user) => {
         new Date().getDate() < 10
           ? "0" + new Date().getDate()
           : new Date().getDate()}`,
-    cards:[],
+    myCards:[],
     transactions:[]
   });
 };

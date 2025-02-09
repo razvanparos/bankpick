@@ -1,9 +1,10 @@
-import * as React from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
-
 function Layout() {
+ 
+
   return (
-    <main>
+    <main className='flex items-center justify-center'>
       <Outlet />
     </main>
   );

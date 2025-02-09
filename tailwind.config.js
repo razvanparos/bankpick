@@ -7,7 +7,8 @@ module.exports = {
         'primaryBlue':'#0066FF',
         'darkBlue': '#161622',
         'gray': '#707070',
-        'darkGray':'#1E1E2D'
+        'darkGray':'#1E1E2D',
+        'lightGray':'#3A3A42'
       },
     },
   },

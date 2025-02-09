@@ -48,7 +48,7 @@ function Register() {
       >
         <div className='flex gap-x-4'>
            <IconComponent icon={<MdOutlineKeyboardArrowLeft />} onClickFunction={()=>{navigate('/login')}}/>
-          <h2 className="text-3xl">Sign up</h2>
+            <h2 className="text-3xl">Sign up</h2>
         </div>
        
         <FormRow type="text" labelText="Full name" onChangeFunction={(e)=>{changeRegisterState('registerName',e.target.value)}}/>

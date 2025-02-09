@@ -11,8 +11,8 @@ function IconComponent({ icon, onClickFunction, type }:IconType) {
     <div
       onClick={onClickFunction}
       className={`
-        flex items-center justify-center bg-darkGray p-4 w-[50px] h-[50px] rounded-full cursor-pointer
-        ${type==='transaction'?'bg-primaryBlue w-[40px] h-[40px]':''}
+        flex items-center justify-center bg-darkGray p-4  rounded-full cursor-pointer
+        ${type==='transaction'?'bg-primaryBlue w-[40px] h-[40px]':'w-[50px] h-[50px]'}
         `}
     >
       <div className="text-2xl">{icon}</div>

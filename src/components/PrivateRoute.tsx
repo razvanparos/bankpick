@@ -34,7 +34,9 @@ export default function PrivateRoute({ children }) {
   const isLogged = localStorage.getItem("currentUser");
 
   return !isUserDataLoaded ? (
-    <div className="flex justify-center items-center h-screen"><FallbackComponent/></div>
+    <div className="flex justify-center items-center h-screen">
+      <FallbackComponent />
+    </div>
   ) : isLogged ? (
     children
   ) : (

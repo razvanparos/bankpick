@@ -10,6 +10,7 @@ import Layout from "./pages/Layout.tsx";
 import Home from "./pages/Home.tsx";
 import AppProvider from "./context/AppContext.tsx";
 import Notification from "./components/NotificationComponent.tsx";
+import Transactions from "./pages/Transactions.tsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             }
           >
             <Route index element={<Home />} />
+            <Route path='transactions' element={<Transactions />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

@@ -21,14 +21,14 @@ export default function PrivateRoute({ children }) {
   }, []);
 
   useEffect(() => {
-    if (userData?.[0]) {
+    if (userData[0]) {
       setIsUserDataLoaded(true);
       clearTimeout(timeoutRef.current);
     } else {
-      timeoutRef.current = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => { 
         setIsUserDataLoaded(true);
       }, 1000);
-    }
+    } 
   }, [userData]);
 
   const isLogged = localStorage.getItem("currentUser");

@@ -15,7 +15,7 @@ function Transactions() {
 
     return ( 
         <article className='flex flex-col gap-y-6 p-4 w-full max-w-[460px] my-8'>
-            <PageHeader text={'Transactions History'} icon={<MdOutlineKeyboardArrowLeft />}/>
+            <PageHeader text={'Transactions History'}/>
             <TransactionsViewer transactions={transactions}/>
         </article>
      );

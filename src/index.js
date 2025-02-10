@@ -11,6 +11,9 @@ import Home from "./pages/Home.tsx";
 import AppProvider from "./context/AppContext.tsx";
 import Notification from "./components/NotificationComponent.tsx";
 import Transactions from "./pages/Transactions.tsx";
+import Cards from "./pages/Cards.tsx";
+import Stats from "./pages/Stats.tsx";
+import Settings from "./pages/Settings.tsx";
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
           >
             <Route index element={<Home />} />
             <Route path='transactions' element={<Transactions />} />
+            <Route path='cards' element={<Cards />} />
+            <Route path='stats' element={<Stats />} />
+            <Route path='settings' element={<Settings />} /> 
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

@@ -14,7 +14,7 @@ function Card({ card }: CardType) {
         onClick={() => {
           setIsFlipped(!isFlipped);
         }}
-        className="w-full max-w-[420px] bg-gray bg-opacity-15 card-bg-img h-[222px] rounded-3xl p-5 flex flex-col justify-between bg-no-repeat bg-center cursor-pointer"
+        className="w-full max-w-[420px] opacity-100 bg-gray bg-opacity-15 card-bg-img h-[222px] rounded-3xl p-5 flex flex-col justify-between bg-no-repeat bg-center cursor-pointer"
       >
         <div className="flex flex-col gap-y-4 mb-4">
           <div className="flex justify-between">

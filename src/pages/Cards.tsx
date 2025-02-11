@@ -1,20 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import PageHeader from "../components/PageHeader.tsx";
-import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import CardsViewer from "../components/CardsViewer.tsx";
-import { AppContext } from "../context/AppContext.tsx";
 import { Slide } from "react-awesome-reveal";
 import ButtonComponent from "../components/ButtonComponent.tsx";
+import { useNavigate } from "react-router-dom";
 function Cards() {
-  const { state } = useContext(AppContext);
-  const { userData } = state;
-  const { myCards } = userData[0];
+  const navigate = useNavigate()
   return (
     <article className="flex flex-col gap-y-6 p-4 w-full max-w-[460px] my-8 overflow-hidden">
       <Slide duration={300}>
         <PageHeader text={"Cards"} />
-        <CardsViewer cards={myCards} />
-        <ButtonComponent text="Add Card +" type='primary' onClickFunction={()=>{}}/>
+        <CardsViewer />
+        <ButtonComponent
+          text="Add Card +"
+          type="primary"
+          onClickFunction={() => {navigate('/add-card')}}
+        />
       </Slide>
     </article>
   );

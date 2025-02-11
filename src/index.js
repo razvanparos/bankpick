@@ -12,8 +12,9 @@ import AppProvider from "./context/AppContext.tsx";
 import Notification from "./components/NotificationComponent.tsx";
 import Transactions from "./pages/Transactions.tsx";
 import Cards from "./pages/Cards.tsx";
-import Stats from "./pages/Stats.tsx";
 import Settings from "./pages/Settings.tsx";
+const Stats = React.lazy(() => import('./pages/Stats.tsx'));
+
 
 function App() {
   return (

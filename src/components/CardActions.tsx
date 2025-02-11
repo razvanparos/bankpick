@@ -6,7 +6,7 @@ import CardActionComponent from "./CardActionComponent.tsx";
 
 function CardActions() {
   return (
-    <article className="flex justify-between py-4">
+    <article className="flex justify-between p-4">
       <CardActionComponent text={"Send"} icon={<VscArrowUp />} />
       <CardActionComponent text={"Receive"} icon={<VscArrowUp className="rotate-180" />}/>
       <CardActionComponent text={"Loan"} icon={<PiBank />} />

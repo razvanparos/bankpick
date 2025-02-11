@@ -10,7 +10,7 @@ interface ButtonComponentType{
 function ButtonComponent({ text, type, onClickFunction }: ButtonComponentType) {
   const buttonClasses = {
     primary: "bg-primaryBlue p-4 rounded-xl",
-    secondary: "bg-lightGray p-4 rounded-xl min-h-[30px]",
+    secondary: "bg-darkGray p-4 rounded-xl min-h-[0px]",
     text: "text-primaryBlue w-fit",
   };
   

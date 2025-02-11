@@ -27,7 +27,7 @@ export const loginUser = async (loginState) => {
       await signInWithEmailAndPassword(auth, loginState.loginEmail, loginState.loginPassword);
       localStorage.setItem("currentUser", auth?.currentUser?.uid || '');
       if (!loginState.rememberMe) {
-        window.addEventListener("beforeunload", (e) => {localStorage.setItem('currentUser','')});
+        window.addEventListener("beforeunload", () => {localStorage.setItem('currentUser','')});
       } 
     } catch (error) {
       throw errorMessages[error.code];

@@ -15,7 +15,7 @@ const useLoadUserData = () => {
 
   useEffect(() => {
     initApp();
-  }, []); 
+  }, []);  
 
   useEffect(() => {
     if (!userData) {

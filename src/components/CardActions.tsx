@@ -1,16 +1,15 @@
 import * as React from "react";
 import { VscArrowUp } from "react-icons/vsc";
-import { PiBank } from "react-icons/pi";
 import { BiDollar } from "react-icons/bi";
 import CardActionComponent from "./CardActionComponent.tsx";
+import { useNavigate } from "react-router-dom";
 
 function CardActions() {
+  const navigate = useNavigate()
   return (
-    <article className="flex justify-between p-4">
-      <CardActionComponent text={"Send"} icon={<VscArrowUp />} />
-      <CardActionComponent text={"Receive"} icon={<VscArrowUp className="rotate-180" />}/>
-      <CardActionComponent text={"Loan"} icon={<PiBank />} />
-      <CardActionComponent text={"TopUp"} icon={<BiDollar />} />
+    <article className="flex justify-between py-4">
+      <CardActionComponent text={"Send"} icon={<VscArrowUp />} onClickFunction={()=>{navigate('/send')}} />
+      <CardActionComponent text={"TopUp"} icon={<BiDollar />} onClickFunction={()=>{navigate('/topup')}}/>
     </article>
   );
 }

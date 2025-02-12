@@ -8,14 +8,14 @@ function HomeHeader() {
   const { userData } = state;
   return (
     <header className="flex items-center gap-x-4">
-      <div
+      <button
         onClick={() => {
           navigate("/settings");
         }}
         className="w-[55px] h-[55px] bg-lightGray rounded-full flex items-center justify-center cursor-pointer"
       >
         <FaUser className="text-2xl" />
-      </div>
+      </button>
       <div>
         <p className="text-sm text-gray">Welcome back,</p>
         <h2 className="text-xl">{userData[0]?.fullName}</h2>

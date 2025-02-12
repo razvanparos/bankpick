@@ -15,14 +15,14 @@ function Layout() {
       <Navbar />
       <Outlet />
       <img
-        className=" lg:w-[400px] absolute top-[25%] -z-10 right-0"
+        className="lg:w-[400px] absolute top-[15%] -z-10 right-0"
         src={ellipse}
         alt=""
       />
       <img
-        className="lg:w-[300px] absolute top-[55%] -z-10 left-0 rotate-180"
+        className="lg:w-[300px] absolute top-[42%] -z-10 left-0 rotate-180"
         src={ellipse}
-        alt=""
+        alt="" 
       />
     </main>
   );

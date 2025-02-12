@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { registerUser } from "../services/authService.ts";
 import Loader from "../components/Loader.tsx";
 import NotificationActions from "../context/actions/notificationActions.ts";
@@ -35,7 +34,7 @@ function Register() {
         registerState.registerEmail,
         registerState.registerPassword
       );
-      await addNewUser(registerState);
+      await addNewUser(registerState.registerName,registerState.registerEmail);
       NotificationActions.showNotification(
         "Registered successfully!",
         "normal"
@@ -48,7 +47,7 @@ function Register() {
   };
 
   return (
-    <main className="flex flex-col items-center h-[100vh] p-4 mt-12">
+    <main className="flex flex-col items-center h-[100vh] p-4">
       <form
         onSubmit={handleRegister}
         className="max-w-[400px] w-full flex flex-col gap-y-6 lg:mt-[105px]"

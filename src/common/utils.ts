@@ -41,10 +41,6 @@ export const formatDateInThreeParts = (d) => {
   return `${year}-${month}-${day > 9 ? day : "0" + day}`;
 };
 
-export const calculateBalance = (cards) => {
-  const totalBalance = cards?.reduce((sum, card) => sum + card.cardBalance, 0);
-  return totalBalance;
-};
 export const getToday = () => {
   let now = new Date();
   let day = now.getDate();
@@ -63,4 +59,8 @@ export const calculateDaysDifference = (d1, d2) => {
 export const nextDay = (date) => {
   const day = new Date(date);
   return formatDateInThreeParts(new Date(day.getTime() + 86400000));
+};
+export const previousDay = (date) => {
+  const day = new Date(date);
+  return formatDateInThreeParts(new Date(day.getTime() - 86400000));
 };

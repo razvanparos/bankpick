@@ -13,28 +13,34 @@ import Notification from "./components/NotificationComponent.tsx";
 import Transactions from "./pages/Transactions.tsx";
 import Cards from "./pages/Cards.tsx";
 import Settings from "./pages/Settings.tsx";
+import AddCard from "./pages/AddCard.tsx";
+import Send from "./pages/Send.tsx";
+import TopUp from "./pages/TopUp.tsx";
 const Stats = React.lazy(() => import('./pages/Stats.tsx'));
 
 
 function App() {
   return (
     <AppProvider>
-      <Notification/>
+      <Notification/> 
       <BrowserRouter>
-        <Routes>
+        <Routes>  
           <Route
-            path="/"
-            element={
+            path="/" 
+            element={ 
               <PrivateRoute>
                 <Layout />
               </PrivateRoute>
             }
           >
             <Route index element={<Home />} />
-            <Route path='transactions' element={<Transactions />} />
+            <Route path='transactions' element={<Transactions />} /> 
             <Route path='cards' element={<Cards />} />
             <Route path='stats' element={<Stats />} />
             <Route path='settings' element={<Settings />} /> 
+            <Route path='add-card' element={<AddCard />} /> 
+            <Route path='send' element={<Send />} /> 
+            <Route path='topup' element={<TopUp />} /> 
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

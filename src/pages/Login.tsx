@@ -37,7 +37,7 @@ function Login() {
   };
 
   return (
-    <main className="flex flex-col items-center h-[100vh] p-4 mt-12">
+    <main className="flex flex-col items-center h-[100vh] p-4">
       <form
         onSubmit={handleLogin}
         className="max-w-[400px] w-full flex flex-col gap-y-6 lg:mt-[105px]"
@@ -51,7 +51,7 @@ function Login() {
         </div>
         <ButtonComponent text={loginState.loading?<Loader/>:"Sign In"} type="primary" />
       </form>
-       <p className="flex items-center justify-center text-sm w-full text-center text-gray">
+       <p className="flex items-center pt-4 justify-center text-sm w-full text-center text-gray">
           I'm a new user. &nbsp;
           <ButtonComponent text={"Sign Up"} type={'text'} onClickFunction={()=>{navigate('/register')}}/>
         </p>

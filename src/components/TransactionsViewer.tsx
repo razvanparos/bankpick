@@ -11,13 +11,13 @@ interface TransactionsViewerType {
 
 function TransactionsViewer({
   transactionsRendered,
-  header,
+  header, 
 }: TransactionsViewerType) {
   const navigate = useNavigate();
   const { state } = useContext(AppContext);
   const { userData } = state;
   return (
-    <>
+    userData[0]?.transactions.length>0?<>
       {header ? (
         <section className="flex justify-between items-center">
           <p>Transactions</p>
@@ -38,7 +38,8 @@ function TransactionsViewer({
           return <TransactionRow key={t.id} t={t} />;
         })}
       </section>
-    </>
+    </>:<p className='text-lg text-center'>No transactions</p>
+    
   );
 }
 

@@ -4,12 +4,13 @@ import ReactCardFlip from "react-card-flip";
 interface CardType {
   card: any;
   key?: string;
+  isFlippedDefault?:boolean
 }
 
-function Card({ card }: CardType) {
+function Card({ card,isFlippedDefault }: CardType) {
   const [isFlipped, setIsFlipped] = useState(false);
   return (
-    <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+    <ReactCardFlip isFlipped={isFlippedDefault?isFlippedDefault:isFlipped} flipDirection="horizontal">
       <section
         onClick={() => {
           setIsFlipped(!isFlipped);
@@ -56,15 +57,15 @@ function Card({ card }: CardType) {
             </h2>
           ))}
         </div>
-        <p className="text-xl">{card.cardName}</p>
+        <p className="text-xl max-w-[400px] overflow-hidden">{card.cardName}</p>
         <div className="flex justify-between">
           <div>
             <p className="text-gray">Expiry Date</p>
-            <p>{`${card.expireMonth} / ${card.expireYear}`}</p>
+            <p className="max-w-[60px] overflow-hidden">{`${card.expireMonth} / ${card.expireYear}`}</p>
           </div>
           <div>
             <p className="text-gray">CVV</p>
-            <p>{card.cvv}</p>
+            <p className="max-w-[30px] overflow-hidden">{card.cardCvv}</p>
           </div>
           <div className="mastercard w-[80px] h-[65px]"></div>
         </div>

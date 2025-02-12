@@ -1,11 +1,10 @@
 import * as React from "react";
-import IconComponent from './IconComponent.tsx';
-function CardActionComponent({text,icon}) {
+function CardActionComponent({text,icon,onClickFunction}) {
   return (
-    <div className="flex flex-col items-center gap-y-2">
-      <IconComponent icon={icon} />
-      <p>{text}</p>
-    </div>
+    <button onClick={onClickFunction} className="flex items-center justify-center gap-2 bg-darkGray w-[49%] py-2 rounded-full text-lg">
+      <p >{text}</p>
+      <div>{icon}</div>
+    </button>   
   );
 }
 

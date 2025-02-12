@@ -1,6 +1,7 @@
 import { or, where } from "firebase/firestore";
 import {
   calculateDaysDifference,
+  formatDateInThreeParts,
   formatDateInTwoParts,
   generateId,
   getToday,
@@ -57,7 +58,7 @@ export const addNewUser = async (name, email) => {
   let initialStats = initialStatsData(7, getToday(), []).reverse();
   await dbRequest.setDb(newId, "UsersDetails", {
     id: newId,
-    accountUSD:0,
+    accountUSD: 0,
     fullName: name,
     email: email,
     joined: `${new Date().getFullYear()}-${months[new Date().getMonth()]}-${
@@ -204,13 +205,29 @@ export const addNewCard = async (card) => {
   }
 };
 
-export const addTransaction = async (user, transaction) => {
+export const addTransaction = async (user,amt,type,from) => {
   let response: any = await dbRequest.queryDb({
     table: "UsersDetails",
     whereCondition: [or(where("id", "==", user), where("email", "==", user))],
   });
   const transactions = response[0]?.transactions;
-  transactions.push(transaction);
+  let newId = generateId();
+  transactions.push({
+    id: newId,
+    amount: amt,
+    transactionDate: formatDateInThreeParts(new Date()),
+    transactionTime: `${
+      new Date().getHours() < 10
+        ? `0${new Date().getHours()}`
+        : new Date().getHours()
+    }:${
+      new Date().getMinutes() < 10
+        ? `0${new Date().getMinutes()}`
+        : new Date().getMinutes()
+    }`,
+    type: type,
+    from: from,
+  });
   await dbRequest.updateDb(response[0].id || user, "UsersDetails", {
     transactions: transactions,
   });
@@ -248,8 +265,8 @@ export const updateCard = async (id, updateParams) => {
         }
       );
       NotificationActions.showNotification("Card updated", "normal");
-    }else NotificationActions.showNotification("Invalid card data", "danger");
-  }else NotificationActions.showNotification("Incomplete card data", "danger");
+    } else NotificationActions.showNotification("Invalid card data", "danger");
+  } else NotificationActions.showNotification("Incomplete card data", "danger");
 };
 
 export const deleteCard = async (id) => {

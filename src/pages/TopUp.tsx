@@ -6,7 +6,7 @@ import ButtonComponent from "../components/ButtonComponent.tsx";
 import Loader from "../components/Loader.tsx";
 import { addMoney, addTransaction } from "../services/usersService.ts";
 import { useNavigate } from "react-router-dom";
-import { formatDateInThreeParts, generateId } from "../common/utils.ts";
+
 function TopUp() {
   const navigate = useNavigate();
   const [topUp, setTopUp] = useState(0);
@@ -15,25 +15,14 @@ function TopUp() {
   const handleTopMoney = async (e) => {
     e.preventDefault();
     setLoading(true);
-    let newId = generateId()
     if (
       (await addMoney(topUp)) &&
-      (await addTransaction(localStorage.getItem("currentUser"), {
-        id: newId,
-        amount: topUp,
-        transactionDate: formatDateInThreeParts(new Date()),
-        transactionTime: `${
-          new Date().getHours() < 10
-            ? `0${new Date().getHours()}`
-            : new Date().getHours()
-        }:${
-          new Date().getMinutes() < 10
-            ? `0${new Date().getMinutes()}`
-            : new Date().getMinutes()
-        }`,
-        type: "income",
-        from: "Top Up",
-      }))
+      (await addTransaction(
+        localStorage.getItem("currentUser"),
+        topUp,
+        "income",
+        "Top Up"
+      ))
     ) {
     } else {
       setLoading(false);

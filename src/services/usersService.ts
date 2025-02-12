@@ -57,6 +57,7 @@ export const addNewUser = async (name, email) => {
   let initialStats = initialStatsData(7, getToday(), []).reverse();
   await dbRequest.setDb(newId, "UsersDetails", {
     id: newId,
+    accountUSD:0,
     fullName: name,
     email: email,
     joined: `${new Date().getFullYear()}-${months[new Date().getMonth()]}-${

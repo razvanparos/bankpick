@@ -16,6 +16,7 @@ import Settings from "./pages/Settings.tsx";
 import AddCard from "./pages/AddCard.tsx";
 import Send from "./pages/Send.tsx";
 import TopUp from "./pages/TopUp.tsx";
+import UpdateCard from "./pages/UpdateCard.tsx";
 const Stats = React.lazy(() => import('./pages/Stats.tsx'));
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='add-card' element={<AddCard />} /> 
             <Route path='send' element={<Send />} /> 
             <Route path='topup' element={<TopUp />} /> 
+            <Route path='update-card' element={<UpdateCard />} /> 
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

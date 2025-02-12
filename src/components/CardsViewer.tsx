@@ -6,9 +6,10 @@ import { getCurrentUserData } from "../services/usersService.ts";
 
 interface CardsViewerType {
   cardsRendered?: number;
+  cardsFlip?:boolean
 }
 
-function CardsViewer({ cardsRendered }: CardsViewerType) {
+function CardsViewer({ cardsRendered}: CardsViewerType) {
   const navigate = useNavigate()
   let [cards, setCards] = useState([]);
   
@@ -26,7 +27,7 @@ function CardsViewer({ cardsRendered }: CardsViewerType) {
     <article className="flex flex-col gap-y-4">
       <p className="text-sm text-gray">Tap the card to reveal information</p>
       {cards.slice(0, cardsRendered).map((card) => {
-        return <Card key={card.id} card={card} />;
+        return <Card key={card.id} card={card} redirect={true}/>;
       })}
     </article>
   ) : (

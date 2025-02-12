@@ -1,7 +1,8 @@
 import * as React from "react";
-function InputComponent({placeholder, onChangeFunction, type}) {
+function InputComponent({ placeholder, onChangeFunction, type, value }) {
   return (
     <input
+      value={value}
       step=".01"
       placeholder={placeholder}
       onChange={onChangeFunction}

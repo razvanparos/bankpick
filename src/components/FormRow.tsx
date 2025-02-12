@@ -6,14 +6,15 @@ interface FormRowType{
     type:string,
     labelText?:string
     onChangeFunction?:Function,
-    placeholder?:string
+    placeholder?:string,
+    value?:any
 }
 
-function FormRow({type, labelText, onChangeFunction, placeholder}:FormRowType) {
+function FormRow({type, labelText, onChangeFunction, placeholder,value}:FormRowType) {
     return ( 
         <div className='flex flex-col'>
             <LabelComponent text={labelText}/>
-            <InputComponent placeholder={placeholder} type={type} onChangeFunction={onChangeFunction}/>
+            <InputComponent value={value} placeholder={placeholder} type={type} onChangeFunction={onChangeFunction}/>
         </div>
      );
 }

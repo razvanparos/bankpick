@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
 import { addNewCard } from "../services/usersService.ts";
-import NotificationActions from "../context/actions/notificationActions.ts";
 import Loader from "../components/Loader.tsx";
 function AddCard() {
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ function AddCard() {
     cardName: "",
     expireYear: 0,
     expireMonth: 0,
-    cvv: 0,
+    cardCvv: 0,
     loading: false,
   };
   const [cardState, setCardState] = useState(initialCardState);
@@ -79,7 +78,7 @@ function AddCard() {
               type="number"
               labelText="CVV"
               onChangeFunction={(e) => {
-                changeCardState("cvv", e.target.value);
+                changeCardState("cardCvv", e.target.value);
               }}
             />
           </div>

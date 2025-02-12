@@ -98,8 +98,14 @@ export const sendMoney = async (to = "", amt) => {
     return false;
   }
   let currentUserData: any = await getCurrentUserData();
-  if (to === localStorage.getItem('currentUser')|| to ===currentUserData[0].email) {
-    NotificationActions.showNotification("Cannot send money to your own account", "danger");
+  if (
+    to === localStorage.getItem("currentUser") ||
+    to === currentUserData[0].email
+  ) {
+    NotificationActions.showNotification(
+      "Cannot send money to your own account",
+      "danger"
+    );
     return false;
   }
   let response: any = await dbRequest.queryDb({
@@ -150,13 +156,13 @@ export const addNewCard = async (card) => {
   if (
     card.cardName &&
     card.cardNumber &&
-    card.cvv &&
+    card.cardCvv &&
     card.expireMonth &&
     card.expireYear
   ) {
     if (
       card.cardNumber.length === 16 &&
-      card.cvv.length === 3 &&
+      card.cardCvv.length === 3 &&
       card.expireMonth.length === 2 &&
       card.expireMonth < 13 &&
       card.expireMonth > 0 &&
@@ -171,7 +177,7 @@ export const addNewCard = async (card) => {
           id: newId,
           cardName: card.cardName,
           cardNumber: card.cardNumber,
-          cardCvv: card.cvv,
+          cardCvv: card.cardCvv,
           expireMonth: card.expireMonth,
           expireYear: card.expireYear,
         });
@@ -208,4 +214,53 @@ export const addTransaction = async (user, transaction) => {
     transactions: transactions,
   });
   return true;
+};
+
+export const updateCard = async (id, updateParams) => {
+  if (
+    updateParams.cardName &&
+    updateParams.cardNumber &&
+    updateParams.cardCvv &&
+    updateParams.expireMonth &&
+    updateParams.expireYear
+  ) {
+    if (
+      updateParams.cardNumber.length === 16 &&
+      updateParams.cardCvv.length === 3 &&
+      updateParams.expireMonth.length === 2 &&
+      updateParams.expireMonth < 13 &&
+      updateParams.expireMonth > 0 &&
+      updateParams.expireYear.length === 2 &&
+      updateParams.expireYear > 25
+    ) {
+      let userdata: any = await getCurrentUserData();
+      let userCards = userdata[0]?.myCards;
+      let remainingCards = userCards.filter((c) => c.id !== id);
+      remainingCards.unshift({
+        ...updateParams,
+      });
+      await dbRequest.updateDb(
+        localStorage.getItem("currentUser") || "",
+        "UsersDetails",
+        {
+          myCards: remainingCards,
+        }
+      );
+      NotificationActions.showNotification("Card updated", "normal");
+    }else NotificationActions.showNotification("Invalid card data", "danger");
+  }else NotificationActions.showNotification("Incomplete card data", "danger");
+};
+
+export const deleteCard = async (id) => {
+  let userdata: any = await getCurrentUserData();
+  let userCards = userdata[0]?.myCards;
+  let remainingCards = userCards.filter((c) => c.id !== id);
+  await dbRequest.updateDb(
+    localStorage.getItem("currentUser") || "",
+    "UsersDetails",
+    {
+      myCards: remainingCards,
+    }
+  );
+  NotificationActions.showNotification("Card deleted", "warning");
 };

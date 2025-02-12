@@ -7,6 +7,7 @@ import Loader from "../components/Loader.tsx";
 import NotificationActions from "../context/actions/notificationActions.ts";
 import { addNewUser } from "../services/usersService.ts";
 import PageHeader from "../components/PageHeader.tsx";
+import { Slide } from "react-awesome-reveal";
 
 function Register() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function Register() {
         registerState.registerEmail,
         registerState.registerPassword
       );
-      await addNewUser(registerState.registerName,registerState.registerEmail);
+      await addNewUser(registerState.registerName, registerState.registerEmail);
       NotificationActions.showNotification(
         "Registered successfully!",
         "normal"
@@ -47,40 +48,42 @@ function Register() {
   };
 
   return (
-    <main className="flex flex-col items-center h-[100vh] p-4">
-      <form
-        onSubmit={handleRegister}
-        className="max-w-[400px] w-full flex flex-col gap-y-6 lg:mt-[105px]"
-      >
-        <PageHeader text={"Sign up"} />
+    <Slide direction={"down"} duration={400}>
+      <main className="flex flex-col items-center h-[100vh] p-4">
+        <form
+          onSubmit={handleRegister}
+          className="max-w-[400px] w-full flex flex-col gap-y-6 lg:mt-[105px]"
+        >
+          <PageHeader text={"Sign up"} />
 
-        <FormRow
-          type="text"
-          labelText="Full name"
-          onChangeFunction={(e) => {
-            changeRegisterState("registerName", e.target.value);
-          }}
-        />
-        <FormRow
-          type="email"
-          labelText="Email address"
-          onChangeFunction={(e) => {
-            changeRegisterState("registerEmail", e.target.value);
-          }}
-        />
-        <FormRow
-          type="password"
-          labelText="Password"
-          onChangeFunction={(e) => {
-            changeRegisterState("registerPassword", e.target.value);
-          }}
-        />
-        <ButtonComponent
-          text={registerState.loading ? <Loader /> : "Sign Up"}
-          type="primary"
-        />
-      </form>
-    </main>
+          <FormRow
+            type="text"
+            labelText="Full name"
+            onChangeFunction={(e) => {
+              changeRegisterState("registerName", e.target.value);
+            }}
+          />
+          <FormRow
+            type="email"
+            labelText="Email address"
+            onChangeFunction={(e) => {
+              changeRegisterState("registerEmail", e.target.value);
+            }}
+          />
+          <FormRow
+            type="password"
+            labelText="Password"
+            onChangeFunction={(e) => {
+              changeRegisterState("registerPassword", e.target.value);
+            }}
+          />
+          <ButtonComponent
+            text={registerState.loading ? <Loader /> : "Sign Up"}
+            type="primary"
+          />
+        </form>
+      </main>
+    </Slide>
   );
 }
 

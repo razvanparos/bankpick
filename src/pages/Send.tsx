@@ -6,7 +6,7 @@ import ButtonComponent from "../components/ButtonComponent.tsx";
 import { addTransaction, sendMoney } from "../services/usersService.ts";
 import Loader from "../components/Loader.tsx";
 import { useNavigate } from "react-router-dom";
-import { formatDateInThreeParts } from "../common/utils.ts";
+import { formatDateInThreeParts, generateId } from "../common/utils.ts";
 function Send() {
     const navigate=useNavigate()
   const [sendToId, setSendToId] = useState("");
@@ -16,8 +16,8 @@ function Send() {
   const handleSendMoney=async(e)=>{
     e.preventDefault();
     setLoading(true)
-    let newId1 = "id" + Math.random().toString(16).slice(2);
-    let newId2 = "id" + Math.random().toString(16).slice(2);
+    let newId1 = generateId();
+    let newId2 = generateId();
     if(await sendMoney(sendToId,sendAmount) &&
     await addTransaction(localStorage.getItem("currentUser"), {
           id: newId1,
@@ -66,7 +66,7 @@ function Send() {
         <form onSubmit={handleSendMoney} className="flex flex-col gap-y-8">
           <FormRow
             type="text"
-            labelText="User ID"
+            labelText="Email or User ID"
             onChangeFunction={(e) => {
               setSendToId(e.target.value);
             }}

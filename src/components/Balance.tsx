@@ -16,7 +16,7 @@ function Balance({ text }) {
   return (
     <div className="flex flex-col items-center justify-center py-6">
       <p className="text-sm text-gray">{text}</p>
-      <span className="text-3xl">{`$${balance.toLocaleString()}`}</span>
+      <span className="text-3xl max-w-[300px] overflow-hidden">{`$${balance.toLocaleString()}`}</span>
     </div>
   );
 }

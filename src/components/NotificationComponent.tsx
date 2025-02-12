@@ -16,7 +16,8 @@ function Notification() {
   return (
     <section
     onClick={()=>{NotificationActions.hideNotification()}}
-      className={`duration-200 rounded-lg py-1 px-4 fixed z-30 left-[50%] translate-x-[-50%] text-center w-[90%] lg:w-fit
+      className={`duration-200 rounded-lg py-1 px-4 fixed z-30 left-[50%] translate-x-[-50%] 
+        text-center w-[90%] lg:w-fit 
         ${notificationClasses[notificationType]}
         ${showNotification?'top-[20px]':'translate-y-[-100%]'}
         `}

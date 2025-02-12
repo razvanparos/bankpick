@@ -3,6 +3,7 @@ import TransactionRow from "./TransactionRow.tsx";
 import ButtonComponent from "./ButtonComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUserData } from "../services/usersService.ts";
+import { sortTransactions } from "../common/utils.ts";
 
 interface TransactionsViewerType {
   transactionsRendered?: number;
@@ -19,7 +20,8 @@ function TransactionsViewer({
 
   const updateTransactions = async () => {
     let data: any = await getCurrentUserData();
-    setTransactions(data[0].transactions);
+    let sortedTransactions = sortTransactions(data[0].transactions)
+    setTransactions(sortedTransactions);
   };
 
   useEffect(() => {

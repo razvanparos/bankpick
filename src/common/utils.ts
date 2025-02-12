@@ -64,3 +64,15 @@ export const previousDay = (date) => {
   const day = new Date(date);
   return formatDateInThreeParts(new Date(day.getTime() - 86400000));
 };
+export const generateId = () => {
+  let newId = "id" + Math.random().toString(16).slice(2);
+  return newId;
+};
+export const sortTransactions = (transactions) => {
+  let sorted = transactions.sort((a: any, b: any) => {
+    let dateA = new Date(`${a.transactionDate}T${a.transactionTime}`);
+    let dateB = new Date(`${b.transactionDate}T${b.transactionTime}`);
+    return dateB.getTime() - dateA.getTime();
+  });
+  return sorted
+};

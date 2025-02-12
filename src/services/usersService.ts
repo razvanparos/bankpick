@@ -1,7 +1,8 @@
-import { where } from "firebase/firestore";
+import { or, where } from "firebase/firestore";
 import {
   calculateDaysDifference,
   formatDateInTwoParts,
+  generateId,
   getToday,
   months,
   nextDay,
@@ -96,9 +97,14 @@ export const sendMoney = async (to = "", amt) => {
     NotificationActions.showNotification("Insufficient funds", "danger");
     return false;
   }
+  let currentUserData: any = await getCurrentUserData();
+  if (to === localStorage.getItem('currentUser')|| to ===currentUserData[0].email) {
+    NotificationActions.showNotification("Cannot send money to your own account", "danger");
+    return false;
+  }
   let response: any = await dbRequest.queryDb({
     table: "UsersDetails",
-    whereCondition: [where("id", "==", to)],
+    whereCondition: [or(where("id", "==", to), where("email", "==", to))],
   });
   if (!response[0]) {
     NotificationActions.showNotification("User not found", "danger");
@@ -110,11 +116,11 @@ export const sendMoney = async (to = "", amt) => {
     "UsersDetails",
     { accountUSD: finalAmount }
   );
-  await dbRequest.updateDb(to || "", "UsersDetails", {
+  await dbRequest.updateDb(response[0].id || to, "UsersDetails", {
     accountUSD: finalAmountReceiver,
   });
   NotificationActions.showNotification("Transaction successfull", "normal");
-  return true
+  return true;
 };
 
 export const addMoney = async (amt) => {
@@ -133,8 +139,11 @@ export const addMoney = async (amt) => {
     "UsersDetails",
     { accountUSD: finalAmount }
   );
-  NotificationActions.showNotification(`$${amt} added to your account`, "normal");
-  return true
+  NotificationActions.showNotification(
+    `$${amt} added to your account`,
+    "normal"
+  );
+  return true;
 };
 
 export const addNewCard = async (card) => {
@@ -154,54 +163,49 @@ export const addNewCard = async (card) => {
       card.expireYear.length === 2 &&
       card.expireYear > 25
     ) {
-      try{
-        let newId = "id" + Math.random().toString(16).slice(2);
-      let userdata: any = await getCurrentUserData();
-      let userCards = userdata[0]?.myCards;
-      userCards.push({
-        id: newId,
-        cardName: card.cardName,
-        cardNumber: card.cardNumber,
-        cardCvv: card.cvv,
-        expireMonth: card.expireMonth,
-        expireYear: card.expireYear,
-      });
-      await dbRequest.updateDb(
-        localStorage.getItem("currentUser") || "",
-        "UsersDetails",
-        {
-          myCards: userCards,
-        }
-      );
-      NotificationActions.showNotification("Card added", "normal");
-      return true
-      }catch(err){
-        throw err
+      try {
+        let newId = generateId();
+        let userdata: any = await getCurrentUserData();
+        let userCards = userdata[0]?.myCards;
+        userCards.push({
+          id: newId,
+          cardName: card.cardName,
+          cardNumber: card.cardNumber,
+          cardCvv: card.cvv,
+          expireMonth: card.expireMonth,
+          expireYear: card.expireYear,
+        });
+        await dbRequest.updateDb(
+          localStorage.getItem("currentUser") || "",
+          "UsersDetails",
+          {
+            myCards: userCards,
+          }
+        );
+        NotificationActions.showNotification("Card added", "normal");
+        return true;
+      } catch (err) {
+        throw err;
       }
-      
     } else {
       NotificationActions.showNotification("Invalid card data", "danger");
-      return false
+      return false;
     }
   } else {
     NotificationActions.showNotification("Incomplete card details", "danger");
-    return false
+    return false;
   }
 };
 
-export const addTransaction=async(user,transaction)=>{
-  let response:any = await dbRequest.queryDb({
+export const addTransaction = async (user, transaction) => {
+  let response: any = await dbRequest.queryDb({
     table: "UsersDetails",
-    whereCondition: [where("id", "==", user)],
+    whereCondition: [or(where("id", "==", user), where("email", "==", user))],
   });
-  const transactions = response[0]?.transactions
-  transactions.push(transaction)
-  await dbRequest.updateDb(
-    user || "",
-    "UsersDetails",
-    {
-      transactions: transactions,
-    }
-  );
-  return true
-}
+  const transactions = response[0]?.transactions;
+  transactions.push(transaction);
+  await dbRequest.updateDb(response[0].id || user, "UsersDetails", {
+    transactions: transactions,
+  });
+  return true;
+};

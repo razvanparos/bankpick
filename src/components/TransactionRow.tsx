@@ -1,6 +1,6 @@
 import * as React from 'react';
-import IconComponent from "./IconComponent.tsx";
 import { BiDollar } from "react-icons/bi";
+import ButtonComponent from './ButtonComponent.tsx';
 
 interface TransactionRowType{
     t:any,
@@ -10,8 +10,10 @@ interface TransactionRowType{
 function TransactionRow({t}:TransactionRowType) {
     return ( 
         <div className="flex items-center justify-between">
-            <div className="flex gap-x-2">
-              <IconComponent icon={<BiDollar />} type={"transaction"} />
+            <div className="flex items-center gap-x-2">
+              <ButtonComponent type='transaction' text=''>
+                {<BiDollar />}
+              </ButtonComponent>
               <div>
                 <p>{t.from}</p>
                 <p className='text-gray text-sm'>{`${t.transactionDate}, ${t.transactionTime}`}</p>

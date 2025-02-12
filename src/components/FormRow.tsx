@@ -1,4 +1,6 @@
 import * as React from 'react';
+import LabelComponent from './LabelComponent.tsx';
+import InputComponent from './InputComponent.tsx';
 
 interface FormRowType{
     type:string,
@@ -10,15 +12,8 @@ interface FormRowType{
 function FormRow({type, labelText, onChangeFunction, placeholder}:FormRowType) {
     return ( 
         <div className='flex flex-col'>
-            <label className='text-gray text-sm'>{labelText}</label>
-            <input
-            step='.01'
-            placeholder={placeholder}
-            onChange={onChangeFunction}
-             className={`
-                ${type==='checkbox'?'scale-125':''}
-                border-b border-gray outline-none p-2 bg-transparent w-full
-                `} type={type} />
+            <LabelComponent text={labelText}/>
+            <InputComponent placeholder={placeholder} type={type} onChangeFunction={onChangeFunction}/>
         </div>
      );
 }

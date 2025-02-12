@@ -1,22 +1,47 @@
-import  React,{useState} from "react";
+import React, { useState } from "react";
 import { Slide } from "react-awesome-reveal";
 import PageHeader from "../components/PageHeader.tsx";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
 import Loader from "../components/Loader.tsx";
-import { addMoney } from "../services/usersService.ts";
+import { addMoney, addTransaction } from "../services/usersService.ts";
 import { useNavigate } from "react-router-dom";
+import { formatDateInThreeParts } from "../common/utils.ts";
 function TopUp() {
-    const navigate = useNavigate()
-    const [topUp,setTopUp]=useState(0)
-    const [loading,setLoading]=useState(false)
+  const navigate = useNavigate();
+  const [topUp, setTopUp] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-    const handleTopMoney=async(e)=>{
-        e.preventDefault()
-        setLoading(true)
-        await addMoney(topUp,navigate)
-        setLoading(false)
+  const handleTopMoney = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    let newId = "id" + Math.random().toString(16).slice(2);
+    if (
+      (await addMoney(topUp)) &&
+      (await addTransaction(localStorage.getItem("currentUser"), {
+        id: newId,
+        amount: topUp,
+        transactionDate: formatDateInThreeParts(new Date()),
+        transactionTime: `${
+          new Date().getHours() < 10
+            ? `0${new Date().getHours()}`
+            : new Date().getHours()
+        }:${
+          new Date().getMinutes() < 10
+            ? `0${new Date().getMinutes()}`
+            : new Date().getMinutes()
+        }`,
+        type: "income",
+        from: "Top Up",
+      }))
+    ) {
+    } else {
+      setLoading(false);
+      return;
     }
+
+    navigate("/");
+  };
   return (
     <article className="flex flex-col gap-y-2 p-4 w-full max-w-[460px] my-8 overflow-hidden">
       <Slide duration={300} triggerOnce={true}>

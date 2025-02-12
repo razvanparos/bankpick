@@ -3,9 +3,10 @@ import { Slide } from "react-awesome-reveal";
 import PageHeader from "../components/PageHeader.tsx";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
-import { sendMoney } from "../services/usersService.ts";
+import { addTransaction, sendMoney } from "../services/usersService.ts";
 import Loader from "../components/Loader.tsx";
 import { useNavigate } from "react-router-dom";
+import { formatDateInThreeParts } from "../common/utils.ts";
 function Send() {
     const navigate=useNavigate()
   const [sendToId, setSendToId] = useState("");
@@ -15,8 +16,46 @@ function Send() {
   const handleSendMoney=async(e)=>{
     e.preventDefault();
     setLoading(true)
-    await sendMoney(sendToId,sendAmount,navigate)
-    setLoading(false)
+    let newId1 = "id" + Math.random().toString(16).slice(2);
+    let newId2 = "id" + Math.random().toString(16).slice(2);
+    if(await sendMoney(sendToId,sendAmount) &&
+    await addTransaction(localStorage.getItem("currentUser"), {
+          id: newId1,
+          amount: sendAmount,
+          transactionDate: formatDateInThreeParts(new Date()),
+          transactionTime: `${
+            new Date().getHours() < 10
+              ? `0${new Date().getHours()}`
+              : new Date().getHours()
+          }:${
+            new Date().getMinutes() < 10
+              ? `0${new Date().getMinutes()}`
+              : new Date().getMinutes()
+          }`,
+          type: "expense",
+          from: "Transfer",
+        }) &&
+    await addTransaction(sendToId, {
+          id: newId2,
+          amount: sendAmount,
+          transactionDate: formatDateInThreeParts(new Date()),
+          transactionTime: `${
+            new Date().getHours() < 10
+              ? `0${new Date().getHours()}`
+              : new Date().getHours()
+          }:${
+            new Date().getMinutes() < 10
+              ? `0${new Date().getMinutes()}`
+              : new Date().getMinutes()
+          }`,
+          type: "income",
+          from: "Transfer",
+        })
+    ){}else {
+      setLoading(false)
+      return
+    }
+    navigate('/')
   }
 
   return (

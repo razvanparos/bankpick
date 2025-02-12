@@ -85,16 +85,16 @@ export const updateUserStatsData = async (updateParams) => {
   );
 };
 
-export const sendMoney = async (to = "", amt, navigate) => {
+export const sendMoney = async (to = "", amt) => {
   if (amt < 1) {
     NotificationActions.showNotification("Minimum transfer is 1$", "danger");
-    return;
+    return false;
   }
   const currentBalance = await getTotalBalance();
   const finalAmount = currentBalance - parseFloat(amt);
   if (finalAmount < 0) {
     NotificationActions.showNotification("Insufficient funds", "danger");
-    return;
+    return false;
   }
   let response: any = await dbRequest.queryDb({
     table: "UsersDetails",
@@ -102,7 +102,7 @@ export const sendMoney = async (to = "", amt, navigate) => {
   });
   if (!response[0]) {
     NotificationActions.showNotification("User not found", "danger");
-    return;
+    return false;
   }
   let finalAmountReceiver = response[0]?.accountUSD + parseFloat(amt);
   await dbRequest.updateDb(
@@ -114,17 +114,17 @@ export const sendMoney = async (to = "", amt, navigate) => {
     accountUSD: finalAmountReceiver,
   });
   NotificationActions.showNotification("Transaction successfull", "normal");
-  navigate("/");
+  return true
 };
 
-export const addMoney = async (amt,navigate) => {
+export const addMoney = async (amt) => {
   if (amt < 1) {
     NotificationActions.showNotification("Minimum topup is $1", "danger");
-    return;
+    return false;
   }
   if (amt > 100000) {
     NotificationActions.showNotification("Maximum topup is $100.000", "danger");
-    return;
+    return false;
   }
   const currentBalance = await getTotalBalance();
   const finalAmount = currentBalance + parseFloat(amt);
@@ -134,10 +134,10 @@ export const addMoney = async (amt,navigate) => {
     { accountUSD: finalAmount }
   );
   NotificationActions.showNotification(`$${amt} added to your account`, "normal");
-  navigate('/')
+  return true
 };
 
-export const addNewCard = async (card, navigate) => {
+export const addNewCard = async (card) => {
   if (
     card.cardName &&
     card.cardNumber &&
@@ -154,7 +154,8 @@ export const addNewCard = async (card, navigate) => {
       card.expireYear.length === 2 &&
       card.expireYear > 25
     ) {
-      let newId = "id" + Math.random().toString(16).slice(2);
+      try{
+        let newId = "id" + Math.random().toString(16).slice(2);
       let userdata: any = await getCurrentUserData();
       let userCards = userdata[0]?.myCards;
       userCards.push({
@@ -173,11 +174,34 @@ export const addNewCard = async (card, navigate) => {
         }
       );
       NotificationActions.showNotification("Card added", "normal");
-      navigate("/cards");
+      return true
+      }catch(err){
+        throw err
+      }
+      
     } else {
       NotificationActions.showNotification("Invalid card data", "danger");
+      return false
     }
   } else {
     NotificationActions.showNotification("Incomplete card details", "danger");
+    return false
   }
 };
+
+export const addTransaction=async(user,transaction)=>{
+  let response:any = await dbRequest.queryDb({
+    table: "UsersDetails",
+    whereCondition: [where("id", "==", user)],
+  });
+  const transactions = response[0]?.transactions
+  transactions.push(transaction)
+  await dbRequest.updateDb(
+    user || "",
+    "UsersDetails",
+    {
+      transactions: transactions,
+    }
+  );
+  return true
+}

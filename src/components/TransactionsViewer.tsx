@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import TransactionRow from "./TransactionRow.tsx";
-import { AppContext } from "../context/AppContext.tsx";
 import ButtonComponent from "./ButtonComponent.tsx";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUserData } from "../services/usersService.ts";
 
 interface TransactionsViewerType {
   transactionsRendered?: number;
@@ -11,15 +11,25 @@ interface TransactionsViewerType {
 
 function TransactionsViewer({
   transactionsRendered,
-  header, 
+  header,
 }: TransactionsViewerType) {
   const navigate = useNavigate();
-  const { state } = useContext(AppContext);
-  const { userData } = state;
-  return (
-    userData[0]?.transactions.length>0?<>
+
+  let [transactions, setTransactions] = useState([]);
+
+  const updateTransactions = async () => {
+    let data: any = await getCurrentUserData();
+    setTransactions(data[0].transactions);
+  };
+
+  useEffect(() => {
+    updateTransactions();
+  }, []);
+
+  return transactions.length > 0 ? (
+    <>
       {header ? (
-        <section className="flex justify-between items-center">
+        <section className="flex justify-between items-center pb-4">
           <p>Transactions</p>
           <ButtonComponent
             text="See All"
@@ -34,12 +44,13 @@ function TransactionsViewer({
       )}
 
       <section className="flex flex-col gap-y-10 bg-darkGray p-4 rounded-xl">
-        {userData[0]?.transactions.slice(0, transactionsRendered).map((t) => {
+        {transactions.slice(0, transactionsRendered).map((t) => {
           return <TransactionRow key={t.id} t={t} />;
         })}
       </section>
-    </>:<p className='text-lg text-center'>No transactions</p>
-    
+    </>
+  ) : (
+    <p className="text-lg text-center">No transactions</p>
   );
 }
 

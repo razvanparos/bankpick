@@ -11,7 +11,7 @@ function Layout() {
       <FallbackComponent />
     </div>
   ) : (
-    <main className="flex justify-center gap-x-8 mb-[45px] lg:mb-0">
+    <main className="flex justify-center gap-x-8 mb-[65px] lg:mb-0">
       <Navbar />
       <Outlet />
       <img

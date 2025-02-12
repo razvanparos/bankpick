@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Navbar() {
     const navigate = useNavigate()
   return <nav className={`
-  z-20 bg-darkGray px-8 sm:px-[25%] fixed bottom-0 w-screen h-[80px] shadow-2xl shadow-black flex lg:flex-col justify-between items-center
+  z-20 bg-darkGray px-8 pb-4 sm:px-[25%] fixed bottom-0 w-screen h-[100px] shadow-2xl shadow-black flex lg:flex-col justify-between items-center
   lg:w-[100px] lg:h-[450px] lg:sticky lg:top-8 lg:mt-8 lg:rounded-xl lg:shadow-sm lg:p-8
   `}>
     <NavbarButton text={'Home'} icon={<AiOutlineHome />} onClickFunction={()=>{navigate('/')}}/>

@@ -27,11 +27,11 @@ function AddCard() {
     }));
   };
 
-  const handleCardSubmit = async(e) => {
+  const handleCardSubmit = async (e) => {
     e.preventDefault();
-    changeCardState('loading',true)
-    await addNewCard(cardState,navigate);
-    changeCardState('loading',false)
+    changeCardState("loading", true);
+    if(await addNewCard(cardState)) navigate("/cards")
+    changeCardState("loading", false);
   };
 
   return (
@@ -84,7 +84,7 @@ function AddCard() {
             />
           </div>
           <ButtonComponent
-            text={cardState.loading?<Loader/>:"Submit"}
+            text={cardState.loading ? <Loader /> : "Submit"}
             type="primary"
             onClickFunction={() => {
               navigate("/add-card");

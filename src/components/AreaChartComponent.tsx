@@ -10,7 +10,7 @@ function AreaChartComponent() {
     setWindowWidth(
       window.innerWidth > 400
         ? 440
-        : window.innerWidth 
+        : window.innerWidth + 10
     );
   }, []);
 
@@ -38,7 +38,7 @@ function AreaChartComponent() {
       margin={{
         top: 10,
         right: 52,
-        left: 32,
+        left:23,
         bottom: 12,
       }}
     >

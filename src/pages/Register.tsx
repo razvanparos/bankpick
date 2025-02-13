@@ -81,7 +81,7 @@ function Register() {
               <InputComponent
                 value={registerState.registerPassword}
                 placeholder=""
-                type="passwod"
+                type="password"
                 onChangeFunction={(e) => {
                   changeRegisterState("registerPassword", e.target.value);
                 }}

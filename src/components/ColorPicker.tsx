@@ -11,7 +11,7 @@ function ColorPicker({ onChangeFunction, cardColor }) {
           }}
           className={`${
             cardColor === c ? "border-4" : ""
-          } w-[50px] h-[50px] bg-${c} rounded-xl cursor-pointer`}
+          } w-[50px] h-[50px] bg-${c}-small rounded-xl cursor-pointer`}
         ></div>
       ))}
     </div>

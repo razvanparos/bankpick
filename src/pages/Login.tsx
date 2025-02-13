@@ -6,6 +6,7 @@ import NotificationActions from "../context/actions/notificationActions.ts";
 import { loginUser } from "../services/authService.ts";
 import Loader from "../components/Loader.tsx";
 import { Slide } from "react-awesome-reveal";
+import InputComponent from "../components/InputComponent.tsx";
 
 function Login() {
   const navigate = useNavigate();
@@ -37,34 +38,44 @@ function Login() {
   };
 
   return (
-    <Slide direction={'down'} duration={400}>
+    <Slide direction={"down"} duration={400}>
       <main className="flex flex-col items-center h-[100vh] p-4">
         <form
           onSubmit={handleLogin}
           className="max-w-[400px] w-full flex flex-col gap-y-6 lg:mt-[105px]"
         >
           <h2 className="text-3xl">Sign In</h2>
-          <FormRow
-            type="email"
-            labelText="Email address"
-            onChangeFunction={(e) => {
-              changeLoginState("loginEmail", e.target.value);
-            }}
-          />
-          <FormRow
-            type="password"
-            labelText="Password"
-            onChangeFunction={(e) => {
-              changeLoginState("loginPassword", e.target.value);
-            }}
-          />
-          <div className="flex items-center gap-x-2 text-sm">
-            <FormRow
-              type="checkbox"
-              onChangeFunction={() => {
-                changeLoginState("rememberMe", !loginState.rememberMe);
+          <FormRow labelText="Email address">
+            <InputComponent
+              value={loginState.cardCvv}
+              placeholder=""
+              type="email"
+              onChangeFunction={(e) => {
+                changeLoginState("loginEmail", e.target.value);
               }}
             />
+          </FormRow>
+          <FormRow labelText="Password">
+            <InputComponent
+              value={loginState.cardCvv}
+              placeholder=""
+              type="password"
+              onChangeFunction={(e) => {
+                changeLoginState("loginPassword", e.target.value);
+              }}
+            />
+          </FormRow>
+          <div className="flex items-center gap-x-2 text-sm">
+            <FormRow>
+              <InputComponent
+                value={loginState.cardCvv}
+                placeholder=""
+                type="checkbox"
+                onChangeFunction={() => {
+                  changeLoginState("rememberMe", !loginState.rememberMe);
+                }}
+              />
+            </FormRow>
             <p>Remember me</p>
           </div>
           <ButtonComponent

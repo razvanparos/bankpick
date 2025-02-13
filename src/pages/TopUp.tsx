@@ -4,12 +4,14 @@ import PageHeader from "../components/PageHeader.tsx";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
 import Loader from "../components/Loader.tsx";
-import { addMoney, addTransaction } from "../services/usersService.ts";
+import { addMoney } from "../services/transactionsService.ts";
+import { addTransaction } from "../services/transactionsService.ts";
 import { useNavigate } from "react-router-dom";
+import InputComponent from "../components/InputComponent.tsx";
 
 function TopUp() {
   const navigate = useNavigate();
-  const [topUp, setTopUp] = useState(0);
+  const [topUp, setTopUp] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleTopMoney = async (e) => {
@@ -37,13 +39,16 @@ function TopUp() {
         <PageHeader text={"Top Up"} />
         <h2 className="text-lg">Add money</h2>
         <form onSubmit={handleTopMoney} className="flex flex-col gap-y-8">
-          <FormRow
-            type="number"
-            labelText="Amount $"
-            onChangeFunction={(e) => {
-              setTopUp(e.target.value);
-            }}
-          />
+          <FormRow labelText="Amount $">
+            <InputComponent
+              type="number"
+              placeholder={''}
+              value={topUp}
+              onChangeFunction={(e) => {
+                setTopUp(e.target.value);
+              }}
+            />
+          </FormRow>
           <ButtonComponent
             text={loading ? <Loader /> : "Add Money"}
             type="primary"

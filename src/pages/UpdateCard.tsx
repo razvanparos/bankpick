@@ -6,7 +6,8 @@ import Card from "../components/Card.tsx";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
 import Loader from "../components/Loader.tsx";
-import { deleteCard, updateCard } from "../services/usersService.ts";
+import { deleteCard, updateCard } from "../services/cardsService.ts";
+import InputComponent from "../components/InputComponent.tsx";
 function UpdateCard() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,14 +15,13 @@ function UpdateCard() {
   const { card } = state;
 
   const initialUpdateState = {
-    id:card.id,
+    id: card.id,
     cardNumber: card.cardNumber,
     cardName: card.cardName,
     expireYear: card.expireYear,
     expireMonth: card.expireMonth,
     cardCvv: card.cardCvv,
-   
-  }; 
+  };
   const [loading, setLoading] = useState(false);
   const [updateState, setUpdateState] = useState(initialUpdateState);
 
@@ -34,15 +34,15 @@ function UpdateCard() {
 
   const handleUpdateCard = async (e) => {
     e.preventDefault();
-    setLoading(true)
-    await updateCard(card.id,updateState)
-    setLoading(false)
+    setLoading(true);
+    await updateCard(card.id, updateState);
+    setLoading(false);
   };
 
   const handleDeleteCard = async (e) => {
     e.preventDefault();
-    await deleteCard(card.id)
-    navigate('/cards')
+    await deleteCard(card.id);
+    navigate("/cards");
   };
 
   return (
@@ -51,65 +51,74 @@ function UpdateCard() {
         <PageHeader text={"Update Card"} />
         <Card card={updateState} isFlippedDefault={true} />
         <form onSubmit={handleUpdateCard} className="flex flex-col gap-y-8">
-          <FormRow
-            value={updateState.cardName}
-            type="text"
-            labelText="Cardholder Name"
-            onChangeFunction={(e) => {
-              changeUpdateState("cardName", e.target.value);
-            }}
-          />
-          <FormRow
-            value={updateState.cardNumber}
-            type="number"
-            labelText="Card Number"
-            onChangeFunction={(e) => {
-              changeUpdateState("cardNumber", e.target.value);
-            }}
-          />
+          <FormRow labelText="Cardholder Name">
+            <InputComponent
+              value={updateState.cardName}
+              placeholder={""}
+              type="text"
+              onChangeFunction={(e) => {
+                changeUpdateState("cardName", e.target.value);
+              }}
+            />
+          </FormRow>
+          <FormRow labelText="Card Number">
+            <InputComponent
+              value={updateState.cardNumber}
+              placeholder={""}
+              type="number"
+              onChangeFunction={(e) => {
+                changeUpdateState("cardNumber", e.target.value);
+              }}
+            />
+          </FormRow>
           <div className="flex justify-between gap-x-24">
             <div>
               <p className="text-sm text-gray">Expire date</p>
               <div className="flex items-center max-w-[250px]">
-                <FormRow
-                  value={updateState.expireMonth}
-                  type="number"
-                  placeholder="mm"
-                  onChangeFunction={(e) => {
-                    changeUpdateState("expireMonth", e.target.value);
-                  }}
-                />
+                <FormRow>
+                  <InputComponent
+                    value={updateState.expireMonth}
+                    placeholder="mm"
+                    type="number"
+                    onChangeFunction={(e) => {
+                      changeUpdateState("expireMonth", e.target.value);
+                    }}
+                  />
+                </FormRow>
                 <p>/</p>
-                <FormRow
-                  value={updateState.expireYear}
-                  type="number"
-                  placeholder="yy"
-                  onChangeFunction={(e) => {
-                    changeUpdateState("expireYear", e.target.value);
-                  }}
-                />
+                <FormRow>
+                  <InputComponent
+                    value={updateState.expireYear}
+                    placeholder="yy"
+                    type="number"
+                    onChangeFunction={(e) => {
+                      changeUpdateState("expireYear", e.target.value);
+                    }}
+                  />
+                </FormRow>
               </div>
             </div>
-            <FormRow
-              value={updateState.cardCvv}   
-              type="number"
-              labelText="CVV"
-              onChangeFunction={(e) => {
-                changeUpdateState("cardCvv", e.target.value);
-              }}
-            />
+            <FormRow labelText="CVV">
+              <InputComponent
+                value={updateState.cardCvv}
+                placeholder=""
+                type="number"
+                onChangeFunction={(e) => {
+                  changeUpdateState("cardCvv", e.target.value);
+                }}
+              />
+            </FormRow>
           </div>
           <ButtonComponent
             text={loading ? <Loader /> : "Update"}
             type="primary"
-           
           />
-          <div className='w-full flex justify-center'>
-             <ButtonComponent
-            text="Delete card"
-            type="danger"
-            onClickFunction={handleDeleteCard}
-          />
+          <div className="w-full flex justify-center">
+            <ButtonComponent
+              text="Delete card"
+              type="danger"
+              onClickFunction={handleDeleteCard}
+            />
           </div>
         </form>
       </Slide>

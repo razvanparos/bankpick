@@ -1,20 +1,16 @@
 import * as React from 'react';
 import LabelComponent from './LabelComponent.tsx';
-import InputComponent from './InputComponent.tsx';
 
 interface FormRowType{
-    type:string,
     labelText?:string
-    onChangeFunction?:Function,
-    placeholder?:string,
-    value?:any
+    children?:any
 }
 
-function FormRow({type, labelText, onChangeFunction, placeholder,value}:FormRowType) {
+function FormRow({labelText,children}:FormRowType) {
     return ( 
         <div className='flex flex-col'>
             <LabelComponent text={labelText}/>
-            <InputComponent value={value} placeholder={placeholder} type={type} onChangeFunction={onChangeFunction}/>
+            {children}
         </div>
      );
 }

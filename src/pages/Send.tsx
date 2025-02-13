@@ -3,13 +3,15 @@ import { Slide } from "react-awesome-reveal";
 import PageHeader from "../components/PageHeader.tsx";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
-import { addTransaction, sendMoney } from "../services/usersService.ts";
+import { sendMoney } from "../services/transactionsService.ts";
+import { addTransaction } from "../services/transactionsService.ts";
 import Loader from "../components/Loader.tsx";
 import { useNavigate } from "react-router-dom";
+import InputComponent from "../components/InputComponent.tsx";
 function Send() {
   const navigate = useNavigate();
   const [sendToId, setSendToId] = useState("");
-  const [sendAmount, setSendAmount] = useState(0);
+  const [sendAmount, setSendAmount] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSendMoney = async (e) => {
@@ -39,20 +41,26 @@ function Send() {
         <PageHeader text={"Send money"} />
         <h2 className="text-lg">Send To</h2>
         <form onSubmit={handleSendMoney} className="flex flex-col gap-y-8">
-          <FormRow
-            type="text"
-            labelText="Email or User ID"
-            onChangeFunction={(e) => {
-              setSendToId(e.target.value);
-            }}
-          />
-          <FormRow
-            type="number"
-            labelText="Amount $"
-            onChangeFunction={(e) => {
-              setSendAmount(e.target.value);
-            }}
-          />
+          <FormRow labelText="Email or User ID">
+            <InputComponent
+              value={sendToId}
+              type="text"
+              placeholder={""}
+              onChangeFunction={(e) => {
+                setSendToId(e.target.value);
+              }}
+            />
+          </FormRow>
+          <FormRow labelText="Amount $">
+            <InputComponent
+              type="number"
+              value={sendAmount}
+              placeholder={''}
+              onChangeFunction={(e) => {
+                setSendAmount(e.target.value);
+              }}
+            />
+          </FormRow>
           <ButtonComponent
             text={loading ? <Loader /> : "Send Money"}
             type="primary"

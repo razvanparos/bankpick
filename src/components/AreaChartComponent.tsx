@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { AreaChart, Area, XAxis } from "recharts";
-import { getChartData } from "../services/usersService.ts";
+import { getChartData } from "../services/chartService.ts";
 
 function AreaChartComponent() {
   const [chartData, setChartData] = useState([]);

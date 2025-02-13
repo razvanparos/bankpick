@@ -17,7 +17,7 @@ function PageHeader({ text }) {
         {<MdOutlineKeyboardArrowLeft />}
       </ButtonComponent>
 
-      <h2 className="text-2xl">{text}</h2>
+      <h1 className="text-2xl">{text}</h1>
     </section>
   );
 }

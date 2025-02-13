@@ -5,16 +5,17 @@ import Card from "../components/Card.tsx";
 import { useNavigate } from "react-router-dom";
 import FormRow from "../components/FormRow.tsx";
 import ButtonComponent from "../components/ButtonComponent.tsx";
-import { addNewCard } from "../services/usersService.ts";
+import { addNewCard } from "../services/cardsService.ts";
 import Loader from "../components/Loader.tsx";
+import InputComponent from "../components/InputComponent.tsx";
 function AddCard() {
   const navigate = useNavigate();
   const initialCardState = {
     cardNumber: "",
     cardName: "",
-    expireYear: 0,
-    expireMonth: 0,
-    cardCvv: 0,
+    expireYear: '',
+    expireMonth: '',
+    cardCvv: '',
     loading: false,
   };
   const [cardState, setCardState] = useState(initialCardState);
@@ -29,7 +30,7 @@ function AddCard() {
   const handleCardSubmit = async (e) => {
     e.preventDefault();
     changeCardState("loading", true);
-    if(await addNewCard(cardState)) navigate("/cards")
+    if (await addNewCard(cardState)) navigate("/cards");
     changeCardState("loading", false);
   };
 
@@ -39,48 +40,63 @@ function AddCard() {
         <PageHeader text={"Add New Card"} />
         <Card card={cardState} isFlippedDefault={true} />
         <form onSubmit={handleCardSubmit} className="flex flex-col gap-y-8">
-          <FormRow
-            type="text"
-            labelText="Cardholder Name"
-            onChangeFunction={(e) => {
-              changeCardState("cardName", e.target.value);
-            }}
-          />
-          <FormRow
-            type="number"
-            labelText="Card Number"
-            onChangeFunction={(e) => {
-              changeCardState("cardNumber", e.target.value);
-            }}
-          />
+          <FormRow labelText="Cardholder Name">
+            <InputComponent
+              value={cardState.cardName}
+              placeholder={""}
+              type={"text"}
+              onChangeFunction={(e) => {
+                changeCardState("cardName", e.target.value);
+              }}
+            />
+          </FormRow>
+          <FormRow labelText="Card Number">
+            <InputComponent
+              value={cardState.cardNumber}
+              placeholder={""}
+              type={"number"}
+              onChangeFunction={(e) => {
+                changeCardState("cardNumber", e.target.value);
+              }}
+            />
+          </FormRow>
           <div className="flex justify-between gap-x-24">
             <div>
               <p className="text-sm text-gray">Expire date</p>
               <div className="flex items-center max-w-[250px]">
-                <FormRow
-                  type="number"
-                  placeholder="mm"
-                  onChangeFunction={(e) => {
-                    changeCardState("expireMonth", e.target.value);
-                  }}
-                />
+                <FormRow>
+                  <InputComponent
+                    value={cardState.expireMonth}
+                    placeholder={"mm"}
+                    type={"number"}
+                    onChangeFunction={(e) => {
+                      changeCardState("expireMonth", e.target.value);
+                    }}
+                  />
+                </FormRow>
                 <p>/</p>
-                <FormRow
-                  type="number"
-                  placeholder="yy"
-                  onChangeFunction={(e) => {
-                    changeCardState("expireYear", e.target.value);
-                  }}
-                />
+                <FormRow>
+                  <InputComponent
+                    value={cardState.expireYear}
+                    placeholder={"yy"}
+                    type={"number"}
+                    onChangeFunction={(e) => {
+                      changeCardState("expireYear", e.target.value);
+                    }}
+                  />
+                </FormRow>
               </div>
             </div>
-            <FormRow
-              type="number"
-              labelText="CVV"
-              onChangeFunction={(e) => {
-                changeCardState("cardCvv", e.target.value);
-              }}
-            />
+            <FormRow labelText="CVV">
+              <InputComponent
+                value={cardState.cardCvv}
+                placeholder={""}
+                type={"number"}
+                onChangeFunction={(e) => {
+                  changeCardState("cardCvv", e.target.value);
+                }}
+              />
+            </FormRow>
           </div>
           <ButtonComponent
             text={cardState.loading ? <Loader /> : "Submit"}

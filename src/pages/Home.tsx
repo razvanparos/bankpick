@@ -29,11 +29,11 @@ function Home() {
         <HomeHeader />
         <Balance text="Personal USD" />
         {homeCard ? (
-          <>
-            <p className="text-sm text-gray mb-2">Tap the card to reveal information</p>
+          <div>
+            <h2 className="text-sm text-gray mb-2">Tap the card to reveal information</h2>
             <Card card={homeCard} />
             <CardActions />
-          </>
+          </div>
         ) : (
           <article className="flex flex-col items-center gap-y-4">
             <p>Add new card</p>

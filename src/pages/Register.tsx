@@ -8,6 +8,7 @@ import NotificationActions from "../context/actions/notificationActions.ts";
 import { addNewUser } from "../services/usersService.ts";
 import PageHeader from "../components/PageHeader.tsx";
 import { Slide } from "react-awesome-reveal";
+import InputComponent from "../components/InputComponent.tsx";
 
 function Register() {
   const navigate = useNavigate();
@@ -56,27 +57,36 @@ function Register() {
         >
           <PageHeader text={"Sign up"} />
 
-          <FormRow
-            type="text"
-            labelText="Full name"
-            onChangeFunction={(e) => {
-              changeRegisterState("registerName", e.target.value);
-            }}
-          />
-          <FormRow
-            type="email"
-            labelText="Email address"
-            onChangeFunction={(e) => {
-              changeRegisterState("registerEmail", e.target.value);
-            }}
-          />
-          <FormRow
-            type="password"
-            labelText="Password"
-            onChangeFunction={(e) => {
-              changeRegisterState("registerPassword", e.target.value);
-            }}
-          />
+          <FormRow labelText="Full Name">
+              <InputComponent
+                value={registerState.registerName}
+                placeholder=""
+                type="text"
+                onChangeFunction={(e) => {
+                  changeRegisterState("registerName", e.target.value);
+                }}
+              />
+            </FormRow>
+            <FormRow labelText="Email address">
+              <InputComponent
+                value={registerState.registerEmail}
+                placeholder=""
+                type="email"
+                onChangeFunction={(e) => {
+                  changeRegisterState("registerEmail", e.target.value);
+                }}
+              />
+            </FormRow>
+            <FormRow labelText="Password">
+              <InputComponent
+                value={registerState.registerPassword}
+                placeholder=""
+                type="passwod"
+                onChangeFunction={(e) => {
+                  changeRegisterState("registerPassword", e.target.value);
+                }}
+              />
+            </FormRow>
           <ButtonComponent
             text={registerState.loading ? <Loader /> : "Sign Up"}
             type="primary"

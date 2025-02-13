@@ -32,7 +32,7 @@ function TransactionsViewer({
     <>
       {header ? (
         <section className="flex justify-between items-center pb-4">
-          <p>Transactions</p>
+          <h2>Transactions</h2>
           <ButtonComponent
             text="See All"
             type="text"

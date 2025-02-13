@@ -1,11 +1,11 @@
 import React, { useState,useEffect } from "react";
-import { getTotalBalance } from "../services/usersService.ts";
+import { getUserBalance } from "../services/usersService.ts";
 
 function Balance({ text }) {
   let [balance, setBalance] = useState(0);
   
   const updateBalance = async () => {
-    const totalBalance = await getTotalBalance();
+    const totalBalance = await getUserBalance();
     setBalance(totalBalance);
   };
 

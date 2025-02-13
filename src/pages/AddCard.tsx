@@ -8,6 +8,7 @@ import ButtonComponent from "../components/ButtonComponent.tsx";
 import { addNewCard } from "../services/cardsService.ts";
 import Loader from "../components/Loader.tsx";
 import InputComponent from "../components/InputComponent.tsx";
+import ColorPicker from "../components/ColorPicker.tsx";
 function AddCard() {
   const navigate = useNavigate();
   const initialCardState = {
@@ -16,6 +17,7 @@ function AddCard() {
     expireYear: '',
     expireMonth: '',
     cardCvv: '',
+    cardColor: 'gray',
     loading: false,
   };
   const [cardState, setCardState] = useState(initialCardState);
@@ -40,6 +42,7 @@ function AddCard() {
         <PageHeader text={"Add New Card"} />
         <Card card={cardState} isFlippedDefault={true} />
         <form onSubmit={handleCardSubmit} className="flex flex-col gap-y-8">
+          <ColorPicker onChangeFunction={changeCardState} cardColor={cardState.cardColor}/>
           <FormRow labelText="Cardholder Name">
             <InputComponent
               value={cardState.cardName}

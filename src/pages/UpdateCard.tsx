@@ -8,6 +8,7 @@ import ButtonComponent from "../components/ButtonComponent.tsx";
 import Loader from "../components/Loader.tsx";
 import { deleteCard, updateCard } from "../services/cardsService.ts";
 import InputComponent from "../components/InputComponent.tsx";
+import ColorPicker from "../components/ColorPicker.tsx";
 function UpdateCard() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function UpdateCard() {
     expireYear: card.expireYear,
     expireMonth: card.expireMonth,
     cardCvv: card.cardCvv,
+    cardColor: card.cardColor,
   };
   const [loading, setLoading] = useState(false);
   const [updateState, setUpdateState] = useState(initialUpdateState);
@@ -46,11 +48,12 @@ function UpdateCard() {
   };
 
   return (
-    <article className="flex flex-col gap-y-6 p-4 w-full max-w-[460px] my-8 overflow-hidden">
+    <article className="flex flex-col gap-y-2 p-4 w-full max-w-[460px] my-8 overflow-hidden">
       <Slide duration={300} triggerOnce={true}>
         <PageHeader text={"Update Card"} />
         <Card card={updateState} isFlippedDefault={true} />
         <form onSubmit={handleUpdateCard} className="flex flex-col gap-y-8">
+          <ColorPicker onChangeFunction={changeUpdateState} cardColor={updateState.cardColor}/>
           <FormRow labelText="Cardholder Name">
             <InputComponent
               value={updateState.cardName}

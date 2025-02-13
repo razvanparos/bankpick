@@ -31,6 +31,7 @@ export const addNewCard = async (card) => {
             cardCvv: card.cardCvv,
             expireMonth: card.expireMonth,
             expireYear: card.expireYear,
+            cardColor: card.cardColor,
           });
           await dbRequest.updateDb(
             localStorage.getItem("currentUser") || "",

@@ -8,6 +8,7 @@ import Card from "../components/Card.tsx";
 import { getCurrentUserData } from "../services/usersService.ts";
 import ButtonComponent from "../components/ButtonComponent.tsx";
 import { useNavigate } from "react-router-dom";
+import AddCardPrompt from "../components/AddCardPrompt.tsx";
 
 function Home() {
   const navigate = useNavigate();
@@ -30,23 +31,13 @@ function Home() {
         <Balance text="Personal USD" />
         {homeCard ? (
           <div>
-            <h2 className="text-sm text-gray mb-2">Tap the card to reveal information</h2>
+            <h2 className="text-sm text-gray mb-2">
+              Tap the card to reveal information
+            </h2>
             <Card card={homeCard} />
-            <CardActions />
           </div>
-        ) : (
-          <article className="flex flex-col items-center gap-y-4">
-            <p>Add new card</p>
-            <ButtonComponent
-              text="+"
-              type="round"
-              onClickFunction={() => {
-                navigate("/add-card");
-              }}
-            />
-          </article>
-        )}
-
+        ) : (<AddCardPrompt/>)}
+        <CardActions />
         <TransactionsViewer header={true} transactionsRendered={5} />
       </Slide>
     </article>

@@ -52,7 +52,7 @@ function TransactionsViewer({
       </section>
     </>
   ) : (
-    <p className="text-lg text-center">No transactions</p>
+    <p className="text-lg text-center text-gray py-8">No transactions</p>
   );
 }
 

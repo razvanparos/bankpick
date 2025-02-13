@@ -3,6 +3,7 @@ import Card from "./Card.tsx";
 import ButtonComponent from "./ButtonComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUserData } from "../services/usersService.ts";
+import AddCardPrompt from "./AddCardPrompt.tsx";
 
 
 function CardsViewer() {
@@ -27,10 +28,7 @@ function CardsViewer() {
       })}
     </article>
   ) : (
-    <article className="flex flex-col items-center gap-y-4">
-        <p>Add new card</p>
-        <ButtonComponent text="+" type='round' onClickFunction={()=>{navigate('/add-card')}}/>
-    </article>
+   <AddCardPrompt/>
   );
 }
 

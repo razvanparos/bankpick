@@ -5,7 +5,7 @@ function ColorPicker({ onChangeFunction, cardColor }) {
     <FormRow labelText="Card color">
     <div className="flex justify-between py-2">
       {["gray", "blue-500", "yellow-300", "green-500", "red-500"].map((c) => (
-        <div
+        <div 
           onClick={() => {
             onChangeFunction("cardColor", c);
           }}

@@ -48,7 +48,7 @@ function UpdateCard() {
   };
 
   return (
-    <article className="flex flex-col gap-y-2 p-4 w-full max-w-[460px] my-8 overflow-hidden">
+    <article className="flex flex-col gap-y-6 p-4 w-full max-w-[460px] my-4 overflow-hidden">
       <Slide duration={300} triggerOnce={true}>
         <PageHeader text={"Update Card"} />
         <Card card={updateState} isFlippedDefault={true} />

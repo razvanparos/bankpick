@@ -9,8 +9,8 @@ function AreaChartComponent() {
   const updateSize = useCallback(() => {
     setWindowWidth(
       window.innerWidth > 400
-        ? 440
-        : window.innerWidth + 10
+        ? 460
+        : window.innerWidth+10
     );
   }, []);
 
@@ -37,8 +37,8 @@ function AreaChartComponent() {
       data={chartData}
       margin={{
         top: 10,
-        right: 52,
-        left:23,
+        right: 62,
+        left:32,
         bottom: 12,
       }}
     >

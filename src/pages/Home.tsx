@@ -6,22 +6,20 @@ import TransactionsViewer from "../components/TransactionsViewer.tsx";
 import { Slide } from "react-awesome-reveal";
 import Card from "../components/Card.tsx";
 import { getCurrentUserData } from "../services/usersService.ts";
-import ButtonComponent from "../components/ButtonComponent.tsx";
-import { useNavigate } from "react-router-dom";
 import AddCardPrompt from "../components/AddCardPrompt.tsx";
+import Loader from "../components/Loader.tsx";
 
 function Home() {
-  const navigate = useNavigate();
-  let [homeCard, setHomeCard] = useState("");
+  let [homeCard, setHomeCard] = useState();
 
   const getHomeCard = async () => {
     let data: any = await getCurrentUserData();
-    let cards = data[0]?.myCards[0];
-    setHomeCard(cards);
+    let card = data[0]?.myCards[0];
+    setHomeCard([card]);
   };
 
   useEffect(() => {
-    getHomeCard();
+    getHomeCard()
   }, []);
 
   return (
@@ -30,13 +28,21 @@ function Home() {
         <HomeHeader />
         <Balance text="Personal USD" />
         {homeCard ? (
-          <div>
-            <h2 className="text-sm text-gray mb-2">
-              Tap the card to reveal information
-            </h2>
-            <Card card={homeCard} />
+          homeCard.length > 0 ? (
+            <div>
+              <h2 className="text-sm text-gray mb-2">
+                Tap the card to reveal information
+              </h2>
+              <Card card={homeCard[0]} />
+            </div>
+          ) : (
+            <AddCardPrompt />
+          )
+        ) : (
+          <div className="w-full flex justify-center p-4">
+            <Loader />
           </div>
-        ) : (<AddCardPrompt/>)}
+        )}
         <CardActions />
         <TransactionsViewer header={true} transactionsRendered={5} />
       </Slide>

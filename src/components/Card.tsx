@@ -18,7 +18,7 @@ function Card({ card, isFlippedDefault,redirect }: CardType) {
       isFlipped={isFlippedDefault ? isFlippedDefault : isFlipped}
       flipDirection="horizontal"
     >
-      <CardFront cardColor={card.cardColor} onClickFunction={!redirect?() => {
+      <CardFront cardColor={card?.cardColor} onClickFunction={!redirect?() => {
           setIsFlipped(!isFlipped);
         }:()=>{navigate('/update-card',{state:{card}})}}  card={card} />
 

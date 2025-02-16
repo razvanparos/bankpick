@@ -11,15 +11,14 @@ import Loader from "../components/Loader.tsx";
 
 function Home() {
   let [homeCard, setHomeCard] = useState();
-
   const getHomeCard = async () => {
     let data: any = await getCurrentUserData();
-    let card = data[0]?.myCards[0];
-    setHomeCard([card]);
+    let cards = data[0]?.myCards;
+    setHomeCard(cards);
   };
 
   useEffect(() => {
-    getHomeCard()
+    getHomeCard();
   }, []);
 
   return (

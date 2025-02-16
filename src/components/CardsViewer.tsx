@@ -20,7 +20,7 @@ function CardsViewer() {
     <div className='w-full flex justify-center p-4'>
       <Loader />
     </div>
-  ) : cards.length > 0 ? (
+  ) : cards?.length > 0 ? (
     <article className="flex flex-col gap-y-4">
       <p className="text-sm text-gray">Tap the card to update information</p>
       {cards.map((card) => {
